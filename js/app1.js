@@ -62,6 +62,17 @@ const rocks =[
     {x: 9, y: 6},
 ];
 
+function formBoundaries() {
+    for (let i = 0; i < rocks.length; i++) {
+        const rock = rocks[i];
+        const rockElement = document.createElement('div');
+        rockElement.className ='rock';
+        rockElement.style.left = (rock.x * 50).toString() + 'px';
+        rockElement.style.top = (rock.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(rockElement);
+    }
+};
+
 $(document).keydown(function(e) {
 
     const key = e.keyCode;

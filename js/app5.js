@@ -46,6 +46,17 @@ const walls =[
     {x: 9, y: 6},
 ];
 
+function formBoundaries() {
+    for (let i = 0; i < walls.length; i++) {
+        const wall = walls[i];
+        const wallElement = document.createElement('div');
+        wallElement.className ='wall';
+        wallElement.style.left = (wall.x * 50).toString() + 'px';
+        wallElement.style.top = (wall.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(wallElement);
+    }
+};
+
 $(document).keydown(function(e) {
 
     const key = e.keyCode;
