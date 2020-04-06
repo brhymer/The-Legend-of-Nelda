@@ -2,7 +2,12 @@
 const linkStats = {
     hp: 150,
     weapon: "adequateSword",
-    damage: "80"
+    damage: 80,
+}
+
+const sentinelStats = {
+    hp: 280,
+    damage: 120
 }
 
 const linkPos = {

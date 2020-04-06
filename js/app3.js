@@ -5,6 +5,11 @@ const linkStats = {
     damage: "80"
 }
 
+const scrubStats = {
+    hp: 100,
+    damage: 50
+}
+
 const linkPos = {
     x:5,
     y:5
@@ -205,10 +210,10 @@ function completeMove(x,y) {
     link = document.getElementById('link');
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
-    if (link.style.top === "50px" && link.style.left === "250px") {
-        alert("you are entering Nelda's tomb");
-        window.location.replace("./level2.html");
-    }
+    // if (link.style.top === "50px" && link.style.left === "250px") {
+    //     alert("you are entering Nelda's tomb");
+    //     window.location.replace("./level2.html");
+    // }
     // if a treasure is there
     if (treasures) {
         for (let i = 0; i < treasures.length; i++) {
