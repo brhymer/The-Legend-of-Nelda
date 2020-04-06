@@ -231,3 +231,18 @@ function battle(el) {
     }
   }
 }
+
+function fightRound() {
+    // link always goes first
+    let linkAtt = Math.floor(Math.random()*linkStats.damage);
+    console.log("Link attacks with " + linkStats.weapon + " !");
+    console.log("Link causes " + linkAtt + " damage!");
+    scrubStats.hp -=linkAtt;
+    if (scrubStats.hp >= 0) {
+    // then the enemy goes
+        let enemyAtt = Math.floor(Math.random()*scrubStats.damage);
+        console.log("The scrub attacks!");
+        console.log("The scrub causes " + enemyAtt + " damage!");
+        linkStats.hp-=enemyAtt;
+    }
+};
