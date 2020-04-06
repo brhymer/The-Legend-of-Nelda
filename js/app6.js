@@ -218,9 +218,6 @@ function completeMove(x,y) {
     link = document.getElementById('link');
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
-    if (link.style.top === "50px" && link.style.left === "250px") {
-        alert("you are entering Nelda's tomb");
-        window.location.replace("./level2.html");
     }
     // if a treasure is there
     if (treasures) {

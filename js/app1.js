@@ -193,10 +193,7 @@ function completeMove(x,y) {
     link = document.getElementById('link');
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
-    if (link.style.top === "50px" && link.style.left === "250px") {
-        alert("you are entering Nelda's tomb");
-        window.location.replace("./level2.html");
-    }
+    
     // if a treasure is there
     if (treasures) {
         for (let i = 0; i < treasures.length; i++) {
@@ -220,12 +217,12 @@ function completeMove(x,y) {
     //  this is the exit point--it changes every level
     if (link.style.top === "50px" && link.style.left === "250px") {
         alert("you are entering Nelda's tomb");
-        localStorage.setItem("linkStats.x", "Smith");
+        // localStorage.setItem("linkStats.x", "Smith");
         // Retrieve
-        document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+        // document.getElementById("result").innerHTML = localStorage.getItem("lastname");
         window.location.replace("./level2.html");
     
-}
+    }
 }
 
 function isAdjacent(x, y){
