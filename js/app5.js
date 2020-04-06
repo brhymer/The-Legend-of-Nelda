@@ -169,3 +169,14 @@ function completeMove(x,y) {
     }
 }
 }
+
+function isAdjacent(x, y){
+    if ((x + 1 === linkPos.x && y === linkPos.y) || 
+    (x + 1 === linkPos.x && y === linkPos.y) ||
+    (x === linkPos.x && y+1 === linkPos.y) ||
+    (x === linkPos.x && y-1 === linkPos.y)) {
+        return true;
+    } else {
+        return false;
+    }
+}
