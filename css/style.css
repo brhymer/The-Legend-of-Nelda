@@ -87,11 +87,23 @@ body{
     margin: 0 auto;
     display: block;
     font-size: 20px;
-    text-align: center;
+    left: 150px;
     color: rgb(41, 179, 70);
     background: rgba(50,50,50,.8);
     border-radius: 10%;
-  }
+    position: absolute;
+}
+
+#start-game{
+    margin: 0 auto;
+    display: block;
+    font-size: 50px;
+    text-align: center;
+    color: gold;
+    background: rgba(50,50,50,.8);
+    border-radius: 50%;
+}
+
 
 #link{
     background: green;
@@ -150,17 +162,8 @@ body{
     text-align: center;
  }
  
- #title-page p{
+#title-page p{
    color: aliceblue;
  }
  
- #start-game{
-    margin: 0 auto;
-    display: block;
-    font-size: 50px;
-    text-align: center;
-    color: gold;
-    background: rgba(50,50,50,.8);
-    border-radius: 50%;
-  }
 
