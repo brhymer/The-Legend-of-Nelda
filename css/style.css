@@ -1,0 +1,122 @@
+
+/* div {
+    height: 50px;
+    width: 50px; */
+}
+body{
+    padding: 0;
+    margin:0;
+    height: auto;
+}
+
+.rock{
+    background-image: url("../sprites/rock-sprite.jpg");
+    position: absolute;
+    height: 50px;
+    width: 50px;
+}
+.wall{
+    background-image: url("../sprites/wall-sprite.jpg");
+    position: absolute;
+    object-fit: scale-down;
+    width: 50px;
+    height: 50px;
+}
+.treasure{
+    background: gold;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
+.water{
+    background: rgb(72, 72, 214);
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
+.enemy{
+    background: rgb(135, 30, 184);
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
+#link{
+    background: green;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+
+}
+
+#old-man{
+    background: red;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+
+}
+
+#entrance{
+    background: black;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+}
+#dstairs{
+    background-image: url("../sprites/dstairs-sprite.jpg");
+    height: 50px;
+    width: 50px;
+    position: absolute;
+}
+
+
+#board {
+    display: grid;
+    position: relative;
+    background: tan;
+    height: 350px;
+    width: 500px;
+    padding: 0;
+    margin: 0;
+    border: 1px black solid;
+}
+
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* popup box */
+  .popup-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; 
+  }
+  
+  /* for closing popups */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
