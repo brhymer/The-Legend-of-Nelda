@@ -257,7 +257,7 @@ function isAdjacent(x, y){
 
 function battle(el) {
     alert('you encountered a scrub!');
-    let popUp = document.getElementById('battle1');
+    let popUp = document.getElementById('battle');
     popUp.style.display = "block";
 
     // link always goes first

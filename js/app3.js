@@ -1,4 +1,9 @@
 //  2nd basement setup
+const linkStats = {
+    hp: 150,
+    weapon: "adequateSword",
+    damage: "80"
+}
 
 const linkPos = {
     x:5,
