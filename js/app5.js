@@ -72,6 +72,35 @@ $(document).keydown(function(e) {
     }
 });
 
+function moveLeft() {
+
+    if (allowMove(linkPos.x-1, linkPos.y)){
+        linkPos.x--;
+        completeMove(linkPos.x, linkPos.y)
+    }
+}
+function moveUp() {
+
+    if (allowMove(linkPos.x, linkPos.y-1)){
+        linkPos.y--;
+        completeMove(linkPos.x, linkPos.y)
+    }
+}
+function moveRight() {
+
+    if (allowMove(linkPos.x+1, linkPos.y)){
+        linkPos.x++;
+        completeMove(linkPos.x, linkPos.y)
+    }
+}
+function moveDown() {
+
+    if (allowMove(linkPos.x, linkPos.y+1)){
+        linkPos.y++;
+        completeMove(linkPos.x, linkPos.y)
+    }
+}
+
 function withinMap (x,y){
     if (x < 0 || y < 0 || x > 9 || y > 6) {
         return false;
