@@ -87,3 +87,19 @@ function allowMove(x,y) {
     }
     return true;
 }
+
+function findObstacles(x,y) {
+    for (let i = 0; i < rocks.length; i++) {
+        const rock = rocks[i];
+        if (rock.x === x && rock.y === y) {
+            return true;
+        }
+    }
+    for (let i = 0; i < enemies.length; i++) {
+        const enemy = enemies[i];
+        if (enemy.x === x && enemy.y === y) {
+            return true;
+    }
+}
+    return false;
+}

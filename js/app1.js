@@ -78,3 +78,18 @@ function allowMove(x,y) {
     }
     return true;
 }
+
+function findObstacles(x,y) {
+    for (let i = 0; i < rocks.length; i++) {
+        const rock = rocks[i];
+        if (rock.x === x && rock.y === y) {
+            return true;
+        }
+    }
+    // level 1 has no enemies, but one NPC
+    if (oldManPos.x === x && oldManPos.y === y) {
+        return true;
+    }
+    return false;
+
+}

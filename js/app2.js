@@ -90,3 +90,19 @@ function allowMove(x,y) {
     }
     return true;
 }
+
+function findObstacles(x,y) {
+    for (let i = 0; i < walls.length; i++) {
+        const wall = walls[i];
+        if (wall.x === x && wall.y === y) {
+            return true;
+        }
+    }
+    for (let i = 0; i < enemies.length; i++) {
+        const enemy = enemies[i];
+        if (enemy.x === x && enemy.y === y) {
+            return true;
+    }
+}
+    return false;
+}
