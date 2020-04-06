@@ -71,6 +71,32 @@ const rocks =[
     {x: 9, y: 6},
 ];
 
+$(document).keydown(function(e) {
+
+    const key = e.keyCode;
+    if ([37, 38, 39, 40].includes(key)){
+        e.preventDefault();
+    }
+    switch(key) {
+      case 37:
+        // go left
+        moveLeft();
+        break;
+      case 38:
+        // go up
+        moveUp();
+        break;
+      case 39:
+        // go right
+        moveRight();
+        break;
+      case 40:
+        // go down
+        moveDown();
+        break;
+    }
+});
+
 function withinMap (x,y){
     if (x < 0 || y < 0 || x > 9 || y > 6) {
         return false;
