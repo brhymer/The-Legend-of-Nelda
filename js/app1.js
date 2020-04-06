@@ -80,6 +80,29 @@ function formBoundaries() {
         document.querySelector('#board').appendChild(rockElement);
     }
 };
+// level-specific--UPDATE
+function addMapItems(){
+ 
+    const oldManEl = document.createElement('div');
+    oldManEl.id ='old-man';
+    oldManEl.style.left = (oldManPos.x * 50).toString() + 'px';
+    oldManEl.style.top = (oldManPos.y * 50).toString() + 'px';
+    document.querySelector('#board').appendChild(oldManEl);
+    const entranceEl = document.createElement('div');
+    entranceEl.id ='entrance';
+    entranceEl.style.left = (entrance.x * 50).toString() + 'px';
+    entranceEl.style.top = (entrance.y * 50).toString() + 'px';
+    document.querySelector('#board').appendChild(entranceEl);    
+    for (let i = 0; i < treasures.length; i++) {
+        const treasEl = document.createElement('div');
+        const treas = treasures[i];
+        treasEl.className ='treasure';
+        treasEl.id='treas' + i;
+        treasEl.style.left = (treas.x * 50).toString() + 'px';
+        treasEl.style.top = (treas.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(treasEl);
+    }
+}
 
 $(document).keydown(function(e) {
 
@@ -225,3 +248,7 @@ function removeElement(el){
     let gone = document.getElementById(el);
     gone.remove();
  }
+
+placeCharacter();
+formBoundaries();
+addMapItems();

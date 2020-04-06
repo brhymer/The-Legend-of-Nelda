@@ -90,6 +90,34 @@ function formBoundaries() {
     }
 };
 
+// level-specific--UPDATE
+function addMapItems(){
+ 
+    for (let i = 0; i < treasures.length; i++) {
+        const treasEl = document.createElement('div');
+        const treas = treasures[i];
+        treasEl.className ='treasure';
+        treasEl.id='treas' + i;
+        treasEl.style.left = (treas.x * 50).toString() + 'px';
+        treasEl.style.top = (treas.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(treasEl);
+        const dstairsEl = document.createElement('div');
+        dstairsEl.id ='dstairs';
+        dstairsEl.style.left = (dstairs.x * 50).toString() + 'px';
+        dstairsEl.style.top = (dstairs.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(dstairsEl);  
+    }
+    for (let i = 0; i < enemies.length; i++) {
+        const enemyEl = document.createElement('div');
+        const enemy = enemies[i];
+        enemyEl.className ='enemy';
+        enemyEl.id='enemy' + i;
+        enemyEl.style.left = (enemy.x * 50).toString() + 'px';
+        enemyEl.style.top = (enemy.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(enemyEl);
+    }
+}
+
 $(document).keydown(function(e) {
 
     const key = e.keyCode;
@@ -291,3 +319,7 @@ function removeElement(el){
     let gone = document.getElementById(el);
     gone.remove();
  }
+
+placeCharacter();
+formBoundaries();
+addMapItems();
