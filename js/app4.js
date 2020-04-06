@@ -61,6 +61,14 @@ const walls =[
     {x: 9, y: 6},
 ];
 
+function placeCharacter(){
+    const link = document.createElement('div');
+    link.id='link';
+    link.style.left = (linkPos.x * 50).toString() + 'px';
+    link.style.top = (linkPos.y * 50).toString() + 'px';
+    document.querySelector('#board').appendChild(link);
+}
+
 function formBoundaries() {
     for (let i = 0; i < walls.length; i++) {
         const wall = walls[i];
