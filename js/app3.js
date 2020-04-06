@@ -246,3 +246,18 @@ function fightRound() {
         linkStats.hp-=enemyAtt;
     }
 };
+
+function getItem(el){
+    console.log("You got a " + el)
+    treasures.pop();
+    removeElement(el);
+}
+function enemyPerish(el){
+    enemies.pop();
+    removeElement(el);
+}
+
+function removeElement(el){
+    let gone = document.getElementById(el);
+    gone.remove();
+ }

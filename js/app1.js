@@ -195,3 +195,14 @@ function isAdjacent(x, y){
         return false;
     }
 }
+
+function getItem(el){
+    console.log("You got a " + el)
+    treasures.pop();
+    removeElement(el);
+}
+
+function removeElement(el){
+    let gone = document.getElementById(el);
+    gone.remove();
+ }
