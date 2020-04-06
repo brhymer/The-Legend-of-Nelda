@@ -61,3 +61,20 @@ const rocks =[
     {x: 9, y: 5},
     {x: 9, y: 6},
 ];
+
+function withinMap (x,y){
+    if (x < 0 || y < 0 || x > 9 || y > 6) {
+        return false;
+    }
+    return true;
+}
+
+function allowMove(x,y) {
+    if(withinMap(x,y)===false){
+        return false;
+    } 
+    if (findObstacles(x,y)===true){
+        return false;
+    }
+    return true;
+}
