@@ -46,6 +46,53 @@ body{
     height: 50px;
 }
 
+.popup {
+    display: none; 
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+/* popup box */
+.popup-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; 
+  }
+  
+/* for closing popups */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+#give-up {
+    margin: 0 auto;
+    display: block;
+    font-size: 20px;
+    text-align: center;
+    color: rgb(41, 179, 70);
+    background: rgba(50,50,50,.8);
+    border-radius: 10%;
+  }
+
 #link{
     background: green;
     position: absolute;
@@ -68,13 +115,20 @@ body{
     width: 50px;
     position: absolute;
 }
+
+#ustairs{
+    background: blue;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+}
+
 #dstairs{
     background-image: url("../sprites/dstairs-sprite.jpg");
     height: 50px;
     width: 50px;
     position: absolute;
 }
-
 
 #board {
     display: grid;
@@ -110,49 +164,3 @@ body{
     border-radius: 50%;
   }
 
-.popup {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* popup box */
-  .popup-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%; 
-  }
-  
-  /* for closing popups */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  #give-up {
-    margin: 0 auto;
-    display: block;
-    font-size: 20px;
-    text-align: center;
-    color: rgb(41, 179, 70);
-    background: rgba(50,50,50,.8);
-    border-radius: 10%;
-  }
