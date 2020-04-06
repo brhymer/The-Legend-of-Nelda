@@ -158,3 +158,39 @@ function findObstacles(x,y) {
 }
     return false;
 }
+
+function completeMove(x,y) {
+    link = document.getElementById('link');
+    link.style.top = (y * 50).toString() + 'px';
+    link.style.left = (x * 50).toString() + 'px';
+    if (link.style.top === "50px" && link.style.left === "250px") {
+        alert("you are entering Nelda's tomb");
+        window.location.replace("./level2.html");
+    }
+    // if a treasure is there
+    if (treasures) {
+        for (let i = 0; i < treasures.length; i++) {
+            let treas = document.getElementsByClassName('treasure');
+            if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
+                let el = treas[i].id
+                getItem(el);
+            }
+        }
+    }
+    // if enemies exist
+    if (enemies) {
+        for (let i = 0; i < enemies.length; i++) {
+            let enemy = document.getElementsByClassName('enemy');
+            //  if you move next to an enemy, battle will initiate.
+            if (isAdjacent(enemies[i].x, enemies[i].y)) {
+                let el = enemy[i].id
+                battle(el);
+            }
+    }
+    //  this is the exit point--it changes every level
+    // if (link.style.top === "250px" && link.style.left === "250px") {
+    //     alert("you don't know what you're getting into");
+    //     window.location.replace("./level3.html");
+    }
+}
+}
