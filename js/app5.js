@@ -3,13 +3,11 @@
 const linkStats = {
     hp: 150,
     weapon: "adequateSword",
-    damage: "80"
-}
-
-const linkPos = {
-    x:8,
-    y:3
+    damage: "80",
+    x: 8,
+    y: 3
 };
+
 const treasures = [
     {x: 1, y: 3},
     {x: 2, y: 2},
@@ -55,8 +53,8 @@ const walls =[
 function placeCharacter(){
     const link = document.createElement('div');
     link.id='link';
-    link.style.left = (linkPos.x * 50).toString() + 'px';
-    link.style.top = (linkPos.y * 50).toString() + 'px';
+    link.style.left = (linkStats.x * 50).toString() + 'px';
+    link.style.top = (linkStats.y * 50).toString() + 'px';
     document.querySelector('#board').appendChild(link);
 }
 
@@ -127,30 +125,30 @@ $(document).keydown(function(e) {
 
 function moveLeft() {
 
-    if (allowMove(linkPos.x-1, linkPos.y)){
-        linkPos.x--;
-        completeMove(linkPos.x, linkPos.y)
+    if (allowMove(linkStats.x-1, linkStats.y)){
+        linkStats.x--;
+        completeMove(linkStats.x, linkStats.y)
     }
 }
 function moveUp() {
 
-    if (allowMove(linkPos.x, linkPos.y-1)){
-        linkPos.y--;
-        completeMove(linkPos.x, linkPos.y)
+    if (allowMove(linkStats.x, linkStats.y-1)){
+        linkStats.y--;
+        completeMove(linkStats.x, linkStats.y)
     }
 }
 function moveRight() {
 
-    if (allowMove(linkPos.x+1, linkPos.y)){
-        linkPos.x++;
-        completeMove(linkPos.x, linkPos.y)
+    if (allowMove(linkStats.x+1, linkStats.y)){
+        linkStats.x++;
+        completeMove(linkStats.x, linkStats.y)
     }
 }
 function moveDown() {
 
-    if (allowMove(linkPos.x, linkPos.y+1)){
-        linkPos.y++;
-        completeMove(linkPos.x, linkPos.y)
+    if (allowMove(linkStats.x, linkStats.y+1)){
+        linkStats.y++;
+        completeMove(linkStats.x, linkStats.y)
     }
 }
 
@@ -224,10 +222,10 @@ function completeMove(x,y) {
 }
 
 function isAdjacent(x, y){
-    if ((x + 1 === linkPos.x && y === linkPos.y) || 
-    (x + 1 === linkPos.x && y === linkPos.y) ||
-    (x === linkPos.x && y+1 === linkPos.y) ||
-    (x === linkPos.x && y-1 === linkPos.y)) {
+    if ((x + 1 === linkStats.x && y === linkStats.y) || 
+    (x + 1 === linkStats.x && y === linkStats.y) ||
+    (x === linkStats.x && y+1 === linkStats.y) ||
+    (x === linkStats.x && y-1 === linkStats.y)) {
         return true;
     } else {
         return false;

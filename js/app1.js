@@ -3,12 +3,10 @@
 const linkStats = {
     hp: 150,
     weapon: "none",
-    damage: "20"
+    damage: "20",
+    x: 6, 
+    y: 6
 }
-
-const linkPos = {
-    x: 6, y: 6
-};
 
 const entrance = {
     x: 5, y: 1
@@ -65,8 +63,8 @@ const rocks =[
 function placeCharacter(){
     const link = document.createElement('div');
     link.id='link';
-    link.style.left = (linkPos.x * 50).toString() + 'px';
-    link.style.top = (linkPos.y * 50).toString() + 'px';
+    link.style.left = (linkStats.x * 50).toString() + 'px';
+    link.style.top = (linkStats.y * 50).toString() + 'px';
     document.querySelector('#board').appendChild(link);
 }
 
@@ -132,30 +130,30 @@ $(document).keydown(function(e) {
 
 function moveLeft() {
 
-    if (allowMove(linkPos.x-1, linkPos.y)){
-        linkPos.x--;
-        completeMove(linkPos.x, linkPos.y)
+    if (allowMove(linkStats.x-1, linkStats.y)){
+        linkStats.x--;
+        completeMove(linkStats.x, linkStats.y)
     }
 }
 function moveUp() {
 
-    if (allowMove(linkPos.x, linkPos.y-1)){
-        linkPos.y--;
-        completeMove(linkPos.x, linkPos.y)
+    if (allowMove(linkStats.x, linkStats.y-1)){
+        linkStats.y--;
+        completeMove(linkStats.x, linkStats.y)
     }
 }
 function moveRight() {
 
-    if (allowMove(linkPos.x+1, linkPos.y)){
-        linkPos.x++;
-        completeMove(linkPos.x, linkPos.y)
+    if (allowMove(linkStats.x+1, linkStats.y)){
+        linkStats.x++;
+        completeMove(linkStats.x, linkStats.y)
     }
 }
 function moveDown() {
 
-    if (allowMove(linkPos.x, linkPos.y+1)){
-        linkPos.y++;
-        completeMove(linkPos.x, linkPos.y)
+    if (allowMove(linkStats.x, linkStats.y+1)){
+        linkStats.y++;
+        completeMove(linkStats.x, linkStats.y)
     }
 }
 
@@ -210,28 +208,31 @@ function completeMove(x,y) {
         }
     }
     // if enemies exist
-    if (enemies) {
-        for (let i = 0; i < enemies.length; i++) {
-            let enemy = document.getElementsByClassName('enemy');
-            //  if you move next to an enemy, battle will initiate.
-            if (isAdjacent(enemies[i].x, enemies[i].y)) {
-                let el = enemy[i].id
-                battle(el);
-            }
-    }
+    // if (enemies) {
+    //     for (let i = 0; i < enemies.length; i++) {
+    //         let enemy = document.getElementsByClassName('enemy');
+    //         //  if you move next to an enemy, battle will initiate.
+    //         if (isAdjacent(enemies[i].x, enemies[i].y)) {
+    //             let el = enemy[i].id
+    //             battle(el);
+            // }
+    // }
     //  this is the exit point--it changes every level
     if (link.style.top === "50px" && link.style.left === "250px") {
         alert("you are entering Nelda's tomb");
+        localStorage.setItem("linkStats.x", "Smith");
+        // Retrieve
+        document.getElementById("result").innerHTML = localStorage.getItem("lastname");
         window.location.replace("./level2.html");
-    }
+    
 }
 }
 
 function isAdjacent(x, y){
-    if ((x + 1 === linkPos.x && y === linkPos.y) || 
-    (x + 1 === linkPos.x && y === linkPos.y) ||
-    (x === linkPos.x && y+1 === linkPos.y) ||
-    (x === linkPos.x && y-1 === linkPos.y)) {
+    if ((x + 1 === linkStats.x && y === linkStats.y) || 
+    (x + 1 === linkStats.x && y === linkStats.y) ||
+    (x === linkStats.x && y+1 === linkStats.y) ||
+    (x === linkStats.x && y-1 === linkStats.y)) {
         return true;
     } else {
         return false;
