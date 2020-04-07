@@ -1,12 +1,7 @@
 //  crypt setup
-const linkStats = JSON.parse(localStorage.getItem('objString'));
-// const linkStats = {
-//     hp: 150,
-//     weapon: "adequateSword",
-//     damage: "80",
-//     x: 8,
-//     y: 3
-// };
+window.localStorage;
+linkStats = JSON.parse(localStorage.getItem('objString'));
+
 
 const treasures = [
     {x: 1, y: 3},
@@ -68,7 +63,6 @@ function formBoundaries() {
         document.querySelector('#board').appendChild(wallElement);
     }
 };
-
 // level-specific--UPDATE
 function addMapItems(){
  
@@ -80,15 +74,20 @@ function addMapItems(){
         treasEl.style.left = (treas.x * 50).toString() + 'px';
         treasEl.style.top = (treas.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(treasEl);
+        const ustairsEl = document.createElement('div');
+        ustairsEl.id ='ustairs';
+        ustairsEl.style.left = (ustairs.x * 50).toString() + 'px';
+        ustairsEl.style.top = (ustairs.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(ustairsEl);  
         const dstairsEl = document.createElement('div');
         dstairsEl.id ='dstairs';
         dstairsEl.style.left = (dstairs.x * 50).toString() + 'px';
         dstairsEl.style.top = (dstairs.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(dstairsEl);  
     }
-    for (let i = 0; i < enemies.length; i++) {
+    for (let i = 0; i < enemyStats.length; i++) {
         const enemyEl = document.createElement('div');
-        const enemy = enemies[i];
+        const enemy = enemyStats[i];
         enemyEl.className ='enemy';
         enemyEl.id='enemy' + i;
         enemyEl.style.left = (enemy.x * 50).toString() + 'px';
@@ -176,8 +175,8 @@ function findObstacles(x,y) {
             return true;
         }
     }
-    for (let i = 0; i < enemies.length; i++) {
-        const enemy = enemies[i];
+    for (let i = 0; i < enemyStats.length; i++) {
+        const enemy = enemyStats[i];
         if (enemy.x === x && enemy.y === y) {
             return true;
     }
@@ -189,31 +188,31 @@ function completeMove(x,y) {
     link = document.getElementById('link');
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
-    }
+
     // if a treasure is there
     if (treasures) {
         for (let i = 0; i < treasures.length; i++) {
             let treas = document.getElementsByClassName('treasure');
             if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
-                let el = treas[i].id
+                let el = treas[i].id.substring(5,6);
                 getItem(el);
             }
         }
     }
     // if enemies exist
-    if (enemies) {
-        for (let i = 0; i < enemies.length; i++) {
+    if (enemyStats) {
+        for (let i = 0; i < enemyStats.length; i++) {
             let enemy = document.getElementsByClassName('enemy');
             //  if you move next to an enemy, battle will initiate.
-            if (isAdjacent(enemies[i].x, enemies[i].y)) {
-                let el = enemy[i].id
+            if (isAdjacent(enemyStats[i].x, enemyStats[i].y)) {
+                let el = enemy[i].id.substring(5,6);
                 battle(el);
             }
     }
     //  this is the exit point--it changes every level
-    // if (link.style.top === "250px" && link.style.left === "250px") {
-    //     alert("you don't know what you're getting into");
-    //     window.location.replace("./level3.html");
+    if (link.style.top === "250px" && link.style.left === "250px") {
+        alert("you don't know what you're getting into");
+        window.location.replace("./level3.html");
     }
 }
 }
@@ -229,29 +228,28 @@ function isAdjacent(x, y){
     }
 }
 
-// is level specific -UPDATE
 function battle(el) {
-    alert('you encountered a scrub!');
-    let popUp = document.getElementById('battle1');
-    popUp.style.display = "block";
+    alert(`you encountered a ${enemyStats[el].type}`);
+    // let popUp = document.getElementById('battle');
+    // popUp.style.display = "block";
 
     // link always goes first
-    while (linkStats.hp > 0 && scrubStats.hp > 0) {
-        fightRound();
+    while (linkStats.hp > 0 && enemyStats[el].hp > 0) {
+        fightRound(el);
         if (linkStats.hp <= 0) {
             alert("you're real dead");
             popUp.style.display="none";
             window.location.replace("./index.html");
         }
-        if (scrubStats.hp <=0){        
-            enemies.pop();
-            enemyPerish(el);
+        if (enemyStats[el].hp <=0){        
+            // enemyStats.pop();
+            // alert(enemyStats[el])
+            removeEnemy(el);
             alert("The scrub was vanquished!")
         }
     }
-    //  update link's hp display
-    hpDisplay = document.getElementById('linkhp');
-    hpDisplay.innerText = `Your hp: ${linkStats.hp}`;
+    //  update the menu display
+    menuDisplay();
   // When the user clicks on <span> (x), close the modal
   let span = document.getElementsByClassName('close')[0];
   span.onclick = function() {
@@ -266,43 +264,51 @@ function battle(el) {
   }
 }
 
-function fightRound() {
+function fightRound(el) {
     // link always goes first
     let linkAtt = Math.floor(Math.random()*linkStats.damage);
     console.log("Link attacks with " + linkStats.weapon + " !");
     console.log("Link causes " + linkAtt + " damage!");
-    scrubStats.hp -=linkAtt;
-    if (scrubStats.hp >= 0) {
+    enemyStats[el].hp -=linkAtt;
+    if (enemyStats[el].hp >= 0) {
     // then the enemy goes
-        let enemyAtt = Math.floor(Math.random()*scrubStats.damage);
-        console.log("The scrub attacks!");
-        console.log("The scrub causes " + enemyAtt + " damage!");
+        let enemyAtt = Math.floor(Math.random()*enemyStats[el].damage);
+        console.log(`The ${enemyStats[el].type} attacks!`);
+        console.log(`The ${enemyStats[el].type} causes " + enemyAtt + " damage!`);
         linkStats.hp-=enemyAtt;
+        menuDisplay();
     }
 };
 
 function getItem(el){
-    console.log("You got a " + el)
-    treasures.pop();
-    removeElement(el);
+    console.log("You got a " + treasures[el].type);
+    linkStats.items.push(treasures[el]);
+    menuDisplay();
+    removeTreas(el);
 }
-function enemyPerish(el){
-    enemies.pop();
-    removeElement(el);
-}
-
-function removeElement(el){
-    let gone = document.getElementById(el);
+function removeEnemy(el){
+    let gone = document.getElementById("enemy" + el);
+    enemyStats.splice(el, 1);
     gone.remove();
  }
+
+function removeTreas(el){
+    let gone = document.getElementById("treas" + el);
+    treasures.splice(el, 1);
+    gone.remove();
+ }
+
+function menuDisplay(){
+    hpDisplay = document.getElementById('linkhp');
+    hpDisplay.innerText = `Your hp: ${linkStats.hp}`;
+    weaponDisplay = document.getElementById('weapon')
+    weaponDisplay.innerText = `Weapon: ${linkStats.weapon}`;
+    itemDisplay = document.getElementById('items');
+    itemDisplay.innerText = `Items: ${linkStats.items}`;
+}
 
 placeCharacter();
 formBoundaries();
 addMapItems();
+menuDisplay();
 
-const hpDisplay = document.getElementById('linkhp');
-hpDisplay.innerText = `Your hp: ${linkStats.hp}`;
-const weaponDisplay = document.getElementById('weapon')
-weaponDisplay.innerText = `Weapon: ${linkStats.weapon}`;
-const itemDisplay = document.getElementById('items');
-itemDisplay.innerText = `Items: ${linkStats.items}`;

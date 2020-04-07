@@ -1,5 +1,6 @@
 // Opening page -- no enemies
 window.localStorage;
+// if (!objectString){
 
 const linkStats = {
     hp: 150,
@@ -9,9 +10,12 @@ const linkStats = {
     y: 6,
     items: []
 }
+// } else {
+//     linkStats = JSON.parse(localStorage.getItem('objString'));
+// }
 
 const entrance = {
-    x: 5, y: 1
+    x: 4, y: 1
 }
 
 const oldManPos =
@@ -42,8 +46,8 @@ const rocks =[
     {x: 3, y: 0},
     {x: 3, y: 1},
     {x: 4, y: 0},
-    {x: 4, y: 1},
     {x: 5, y: 0},
+    {x: 5, y: 1},
     {x: 6, y: 0},
     {x: 6, y: 1},
     {x: 7, y: 0},
@@ -217,11 +221,11 @@ function completeMove(x,y) {
             // }
     // }
     //  this is the exit point--it changes every level
-    if (link.style.top === "50px" && link.style.left === "250px") {
+    if (link.style.top === "50px" && link.style.left === "200px") {
         alert("you are entering Nelda's tomb");
 
         // put linkStats into storage
-        localStorage.setItem(linkStats, JSON.stringify('objString'));
+        localStorage.setItem('objString', JSON.stringify(linkStats));
     
         window.location.replace("./level2.html");
     
@@ -253,6 +257,7 @@ function removeElement(el){
 placeCharacter();
 formBoundaries();
 addMapItems();
+menuDisplay();
 
 const popUp = document.getElementById("talk");
 
@@ -277,10 +282,13 @@ clickOM.onclick = function() {
     alert('you received the Adequate Sword!')
     linkStats.weapon="adequateSword";
     linkStats.damage=80;
+    // localStorage.setItem(JSON.stringify(linkStats), 'objString');
   } else {
     words.innerText = message[randomIndex];
     randomIndex = Math.floor(Math.random()*3)
   }
+  menuDisplay();
+
 }
 
 // When the user clicks on <span> (x), close the modal
@@ -295,9 +303,11 @@ window.onclick = function(event) {
   }
 }
 
-const hpDisplay = document.getElementById('linkhp');
-hpDisplay.innerText = `Your hp: ${linkStats.hp}`;
-const weaponDisplay = document.getElementById('weapon')
-weaponDisplay.innerText = `Weapon: ${linkStats.weapon}`;
-const itemDisplay = document.getElementById('items');
-itemDisplay.innerText = `Items: ${linkStats.items}`;
+function menuDisplay(){
+    hpDisplay = document.getElementById('linkhp');
+    hpDisplay.innerText = `Your hp: ${linkStats.hp}`;
+    weaponDisplay = document.getElementById('weapon')
+    weaponDisplay.innerText = `Weapon: ${linkStats.weapon}`;
+    itemDisplay = document.getElementById('items');
+    itemDisplay.innerText = `Items: ${linkStats.items}`;
+}

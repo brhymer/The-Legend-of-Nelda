@@ -113,13 +113,6 @@ body{
     padding: 10px 0 0 10px;
 }
 
-#link{
-    background: green;
-    position: absolute;
-    height: 50px;
-    width: 50px;
-}
-
 #old-man{
     background-image: url('../sprites/old-man1.jpg');
     position: absolute;
@@ -136,7 +129,7 @@ body{
 }
 
 #ustairs{
-    background: blue;
+    background: url("../sprites/ustairs-sprite.jpg");
     height: 50px;
     width: 50px;
     position: absolute;
@@ -147,6 +140,13 @@ body{
     height: 50px;
     width: 50px;
     position: absolute;
+}
+
+#link{
+    background: green;
+    position: absolute;
+    height: 50px;
+    width: 50px;
 }
 
 #board {
