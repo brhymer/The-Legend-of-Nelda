@@ -1,11 +1,13 @@
 // Opening page -- no enemies
+window.localStorage;
 
 const linkStats = {
     hp: 150,
-    weapon: "none",
+    weapon: "bare hands",
     damage: "20",
     x: 6, 
-    y: 6
+    y: 6,
+    items: []
 }
 
 const entrance = {
@@ -217,9 +219,10 @@ function completeMove(x,y) {
     //  this is the exit point--it changes every level
     if (link.style.top === "50px" && link.style.left === "250px") {
         alert("you are entering Nelda's tomb");
-        // localStorage.setItem("linkStats.x", "Smith");
-        // Retrieve
-        // document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+
+        // put linkStats into storage
+        localStorage.setItem(linkStats, JSON.stringify('objString'));
+    
         window.location.replace("./level2.html");
     
     }
@@ -250,3 +253,10 @@ function removeElement(el){
 placeCharacter();
 formBoundaries();
 addMapItems();
+
+const hpDisplay = document.getElementById('linkhp');
+hpDisplay.innerText = `Your hp: ${linkStats.hp}`;
+const weaponDisplay = document.getElementById('weapon')
+weaponDisplay.innerText = `Weapon: ${linkStats.weapon}`;
+const itemDisplay = document.getElementById('items');
+itemDisplay.innerText = `Items: ${linkStats.items}`;

@@ -1,12 +1,12 @@
 //  underground setup
-
-const linkStats = {
-    hp: 150,
-    weapon: "adequateSword",
-    damage: "80",
-    x: 8,
-    y: 5
-}
+const linkStats = JSON.parse(localStorage.getItem('objString'));
+// const linkStats = {
+//     hp: 150,
+//     weapon: "adequateSword",
+//     damage: "80",
+//     x: 8,
+//     y: 5
+// }
 
 const linkStats = {
     x:8,
@@ -328,3 +328,6 @@ function removeElement(el){
 placeCharacter();
 formBoundaries();
 addMapItems();
+
+const hpDisplay = document.getElementById('linkhp');
+hpDisplay.innerText = `Your hp: ${linkStats.hp}`;

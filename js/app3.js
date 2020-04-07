@@ -1,11 +1,13 @@
 //  2nd basement setup
-const linkStats = {
-    hp: 150,
-    weapon: "adequateSword",
-    damage: "80",
-    x: 5,
-    y: 5
-}
+
+const linkStats = JSON.parse(localStorage.getItem('objString'));
+// const linkStats = {
+//     hp: 150,
+//     weapon: "adequateSword",
+//     damage: "80",
+//     x: 5,
+//     y: 5
+// }
 
 const scrubStats = {
     hp: 100,
@@ -318,3 +320,5 @@ placeCharacter();
 formBoundaries();
 addMapItems();
 
+const hpDisplay = document.getElementById('linkhp');
+hpDisplay.innerText = `Your hp: ${linkStats.hp}`;

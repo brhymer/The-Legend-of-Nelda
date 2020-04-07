@@ -3,8 +3,9 @@
   }
 
 div {
-    height: 50px;
-    width: 50px;
+    color: gold;
+    height: 30px;
+    width: auto;
 }
 body{
     padding: 0;
@@ -40,7 +41,7 @@ body{
 }
 
 .enemy{
-    background: rgb(135, 30, 184);
+    background-image: url('../sprites/scrub-sprite1.jpg');
     position: absolute;
     width: 50px;
     height: 50px;
@@ -114,7 +115,7 @@ body{
 }
 
 #old-man{
-    background: red;
+    background-image: url('../sprites/old-man1.jpg');
     position: absolute;
     height: 50px;
     width: 50px;
