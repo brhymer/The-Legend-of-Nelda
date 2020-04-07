@@ -1,11 +1,10 @@
-* {
+body {
     background: #121212;
   }
 
 div {
     color: gold;
     height: 30px;
-    width: auto;
 }
 body{
     padding: 0;
@@ -105,13 +104,20 @@ body{
     border-radius: 50%;
 }
 
+#menu {
+    border: 2px solid white;
+    border-radius: 10%;
+    background-color: darkblue;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    width: 485px;
+    padding: 10px 0 0 10px;
+}
 
 #link{
     background: green;
     position: absolute;
     height: 50px;
     width: 50px;
-
 }
 
 #old-man{

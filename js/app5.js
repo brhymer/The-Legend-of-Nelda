@@ -302,3 +302,7 @@ addMapItems();
 
 const hpDisplay = document.getElementById('linkhp');
 hpDisplay.innerText = `Your hp: ${linkStats.hp}`;
+const weaponDisplay = document.getElementById('weapon')
+weaponDisplay.innerText = `Weapon: ${linkStats.weapon}`;
+const itemDisplay = document.getElementById('items');
+itemDisplay.innerText = `Items: ${linkStats.items}`;

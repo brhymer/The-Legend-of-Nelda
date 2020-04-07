@@ -248,11 +248,52 @@ function getItem(el){
 function removeElement(el){
     let gone = document.getElementById(el);
     gone.remove();
- }
+}
 
 placeCharacter();
 formBoundaries();
 addMapItems();
+
+const popUp = document.getElementById("talk");
+
+// Click the old man to open the dialogue box
+const clickOM = document.getElementById("old-man");
+
+// The X to close the popup
+const span = document.getElementsByClassName("close")[0];
+
+// when player clicks on the old man, open the dialogue
+clickOM.onclick = function() {
+  let words = document.getElementById('words');
+  popUp.style.display = "block";
+  let randomIndex = Math.floor(Math.random()*3)
+  let message = [
+      "Don't sue me",
+      "Look out for purple guys",
+      "Nelda is weak to lightning"
+  ]
+  if (linkStats.weapon==="bare hands") {
+    words.innerText ="You're gonna need a weapon if you're going in there.  Take this."
+    alert('you received the Adequate Sword!')
+    linkStats.weapon="adequateSword";
+    linkStats.damage=80;
+  } else {
+    words.innerText = message[randomIndex];
+    randomIndex = Math.floor(Math.random()*3)
+  }
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  popUp.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == popUp) {
+    popUp.style.display = "none";
+  }
+}
 
 const hpDisplay = document.getElementById('linkhp');
 hpDisplay.innerText = `Your hp: ${linkStats.hp}`;
