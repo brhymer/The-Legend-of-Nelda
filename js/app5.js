@@ -2,16 +2,56 @@
 window.localStorage;
 linkStats = JSON.parse(localStorage.getItem('objString'));
 
+const enemyStats = {
+    type: "ghost of Nelda", 
+    hp: 400,
+    damage: 140,
+    x: 5, 
+    y: 3
+}
+
 
 const treasures = [
-    {x: 1, y: 3},
-    {x: 2, y: 2},
-    {x: 2, y: 3},
-    {x: 2, y: 4}
+    {type: "Nelda's ring",
+    description: "a tasteful and understated silver diamond ring",
+    x: 1, 
+    y: 3
+    },
+    {type: "Nelda's sceptre",
+    description: "set with a gorgeous ruby",
+    x: 2, 
+    y: 2
+    },
+    {type: "Nelda's anklet",
+    description: "golden and platium ropework with three fine sapphires",
+    x: 2, 
+    y: 3
+    },
+    {type: "Nelda's grimoire",
+    description: "this priceless artifact is what it was all about",
+    x: 2,
+    y: 4
+}];
+
+const ustairs = {
+    x: 8, y: 3
+};
+
+const holes= [
+    {x: 1, y: 1},
+    {x: 1, y: 2},
+    {x: 1, y: 4},
+    {x: 1, y: 5},
+    {x: 2, y: 1},
+    {x: 2, y: 5},
+    {x: 3, y: 1},
+    {x: 3, y: 5},
+    {x: 4, y: 1},
+    {x: 4, y: 5},
+    {x: 5, y: 1},
+    {x: 5, y: 5}
 ];
-const enemies = [
-    {x: 5, y: 3}
-]
+
 const walls =[
     {x: 0, y: 0},
     {x: 0, y: 1},
@@ -65,7 +105,14 @@ function formBoundaries() {
 };
 // level-specific--UPDATE
 function addMapItems(){
- 
+    for (let i = 0; i < holes.length; i++) {
+        const holeEl = document.createElement('div');
+        const hole = holes[i];
+        holeEl.className ='hole';
+        holeEl.style.left = (hole.x * 50).toString() + 'px';
+        holeEl.style.top = (hole.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(holeEl);
+    } 
     for (let i = 0; i < treasures.length; i++) {
         const treasEl = document.createElement('div');
         const treas = treasures[i];
@@ -79,11 +126,6 @@ function addMapItems(){
         ustairsEl.style.left = (ustairs.x * 50).toString() + 'px';
         ustairsEl.style.top = (ustairs.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(ustairsEl);  
-        const dstairsEl = document.createElement('div');
-        dstairsEl.id ='dstairs';
-        dstairsEl.style.left = (dstairs.x * 50).toString() + 'px';
-        dstairsEl.style.top = (dstairs.y * 50).toString() + 'px';
-        document.querySelector('#board').appendChild(dstairsEl);  
     }
     for (let i = 0; i < enemyStats.length; i++) {
         const enemyEl = document.createElement('div');
@@ -230,38 +272,21 @@ function isAdjacent(x, y){
 
 function battle(el) {
     alert(`you encountered a ${enemyStats[el].type}`);
-    // let popUp = document.getElementById('battle');
-    // popUp.style.display = "block";
-
     // link always goes first
     while (linkStats.hp > 0 && enemyStats[el].hp > 0) {
         fightRound(el);
         if (linkStats.hp <= 0) {
             alert("you're real dead");
-            popUp.style.display="none";
             window.location.replace("./index.html");
         }
         if (enemyStats[el].hp <=0){        
             // enemyStats.pop();
-            // alert(enemyStats[el])
             removeEnemy(el);
             alert("The scrub was vanquished!")
         }
     }
     //  update the menu display
     menuDisplay();
-  // When the user clicks on <span> (x), close the modal
-  let span = document.getElementsByClassName('close')[0];
-  span.onclick = function() {
-    popUp.style.display = "none";
-  }
-  
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == popUp) {
-      popUp.style.display = "none";
-    }
-  }
 }
 
 function fightRound(el) {

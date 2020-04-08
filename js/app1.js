@@ -254,9 +254,10 @@ function removeElement(el){
     gone.remove();
 }
 
-placeCharacter();
+
 formBoundaries();
 addMapItems();
+placeCharacter();
 menuDisplay();
 
 const popUp = document.getElementById("talk");
@@ -280,9 +281,9 @@ clickOM.onclick = function() {
   if (linkStats.weapon==="bare hands") {
     words.innerText ="You're gonna need a weapon if you're going in there.  Take this."
     alert('you received the Adequate Sword!')
-    linkStats.weapon="adequateSword";
+    linkStats.weapon="Adequate Sword";
     linkStats.damage=80;
-    // localStorage.setItem(JSON.stringify(linkStats), 'objString');
+
   } else {
     words.innerText = message[randomIndex];
     randomIndex = Math.floor(Math.random()*3)

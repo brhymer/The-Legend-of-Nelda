@@ -1,7 +1,7 @@
 // 1st basement setup
 window.localStorage;
 linkStats = JSON.parse(localStorage.getItem('objString'));
-
+const itemList =[];
 
 const enemyStats = [
     {
@@ -20,22 +20,28 @@ const treasures = [
     },
     {type: "blue key",
     description: "unlocks blue door",
-    x: 3, 
-    y: 5
+    x: 1, 
+    y: 1
     },
     {type: "potion",
     description: "restores hp",
     x: 8, 
     y: 4
 }];
-const ustairs = {
-    x: 4,
-    y: 1
-}
 
-const dstairs = {
-    x: 5, y: 5
-}
+const ustairs = [
+    {x: 4, y: 1},
+    {x: 8, y: 2}
+];
+
+const dstairs = [
+    {x: 3, y: 5},
+    {x: 5, y: 5}
+];
+
+const blueDoor = {
+    x: 5, y: 3
+};
 
 const walls =[
     {x: 0, y: 0},
@@ -114,17 +120,31 @@ function addMapItems(){
         treasEl.style.left = (treas.x * 50).toString() + 'px';
         treasEl.style.top = (treas.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(treasEl);
+    }
+    for (let i = 0; i < ustairs.length; i++) {
         const ustairsEl = document.createElement('div');
-        ustairsEl.id ='ustairs';
-        ustairsEl.style.left = (ustairs.x * 50).toString() + 'px';
-        ustairsEl.style.top = (ustairs.y * 50).toString() + 'px';
-        document.querySelector('#board').appendChild(ustairsEl);  
+        const ustrs = ustairs[i];
+        ustairsEl.className = 'ustairs';
+        ustairsEl.id ='ustairs' + i;
+        ustairsEl.style.left = (ustrs.x * 50).toString() + 'px';
+        ustairsEl.style.top = (ustrs.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(ustairsEl);
+    }
+    for (let i = 0; i < dstairs.length; i++) {
         const dstairsEl = document.createElement('div');
-        dstairsEl.id ='dstairs';
-        dstairsEl.style.left = (dstairs.x * 50).toString() + 'px';
-        dstairsEl.style.top = (dstairs.y * 50).toString() + 'px';
+        const dstrs = dstairs[i];
+        dstairsEl.className = 'dstairs';
+        dstairsEl.id ='dstairs' + i;
+        dstairsEl.style.left = (dstrs.x * 50).toString() + 'px';
+        dstairsEl.style.top = (dstrs.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(dstairsEl);  
     }
+        const bdoorEl = document.createElement('div');
+        bdoorEl.id ='blue-door';
+        bdoorEl.style.left = (blueDoor.x * 50).toString() + 'px';
+        bdoorEl.style.top = (blueDoor.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(bdoorEl);  
+
     for (let i = 0; i < enemyStats.length; i++) {
         const enemyEl = document.createElement('div');
         const enemy = enemyStats[i];
@@ -220,6 +240,9 @@ function findObstacles(x,y) {
         if (enemy.x === x && enemy.y === y) {
             return true;
     }
+    if (blueDoor.x === x && blueDoor.y === y) {
+        return true;
+    }
 }
     return false;
 }
@@ -250,7 +273,8 @@ function completeMove(x,y) {
             }
     }
     //  this is the exit point--it changes every level
-    if (link.style.top === "250px" && link.style.left === "250px") {
+    if ((link.style.top === "250px" && link.style.left === "150px")||
+       (link.style.top === "250px" && link.style.left === "250px")) {
         alert("you don't know what you're getting into");
         localStorage.setItem('objString', JSON.stringify(linkStats));
         window.location.replace("./level3.html");
@@ -277,9 +301,6 @@ function isAdjacent(x, y){
 
 function battle(el) {
     alert(`you encountered a ${enemyStats[el].type}`);
-    // let popUp = document.getElementById('battle');
-    // popUp.style.display = "block";
-
     // link always goes first
     while (linkStats.hp > 0 && enemyStats[el].hp > 0) {
         fightRound(el);
@@ -292,36 +313,23 @@ function battle(el) {
             // enemyStats.pop();
             // alert(enemyStats[el])
             removeEnemy(el);
-            alert("The scrub was vanquished!")
+            alert("The scrub was vanquished!");
+            break;
         }
     }
     //  update the menu display
     menuDisplay();
-  // When the user clicks on <span> (x), close the modal
-  let span = document.getElementsByClassName('close')[0];
-  span.onclick = function() {
-    popUp.style.display = "none";
-  }
-  
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == popUp) {
-      popUp.style.display = "none";
-    }
-  }
 }
 
 function fightRound(el) {
     // link always goes first
     let linkAtt = Math.floor(Math.random()*linkStats.damage);
-    console.log("Link attacks with " + linkStats.weapon + " !");
-    console.log("Link causes " + linkAtt + " damage!");
+    alert("Link attacks with " + linkStats.weapon + ":" + linkAtt + " damage!");
     enemyStats[el].hp -=linkAtt;
     if (enemyStats[el].hp >= 0) {
     // then the enemy goes
         let enemyAtt = Math.floor(Math.random()*enemyStats[el].damage);
-        console.log(`The ${enemyStats[el].type} attacks!`);
-        console.log(`The ${enemyStats[el].type} causes ${enemyAtt} damage!`);
+        alert(`The ${enemyStats[el].type} attacks:  ${enemyAtt} damage!`);
         linkStats.hp-=enemyAtt;
         menuDisplay();
     }
@@ -330,6 +338,7 @@ function fightRound(el) {
 function getItem(el){
     console.log("You got a " + treasures[el].type);
     linkStats.items.push(treasures[el]);
+    itemList.push(treasures[el].type);
     menuDisplay();
     removeTreas(el);
 }
@@ -351,11 +360,13 @@ function menuDisplay(){
     weaponDisplay = document.getElementById('weapon')
     weaponDisplay.innerText = `Weapon: ${linkStats.weapon}`;
     itemDisplay = document.getElementById('items');
-    itemDisplay.innerText = `Items: ${linkStats.items}`;
+    itemDisplay.innerText = `Items: ${itemList}`;
 }
 
-placeCharacter();
+
 formBoundaries();
 addMapItems();
+placeCharacter();
 menuDisplay();
+
 

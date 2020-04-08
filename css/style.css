@@ -14,19 +14,21 @@ body{
 
 .rock{
     background-image: url("../sprites/rock-sprite.jpg");
+    background-size: cover;
     position: absolute;
     height: 50px;
     width: 50px;
 }
 .wall{
     background-image: url("../sprites/wall-sprite.jpg");
+    background-size: cover;
     position: absolute;
-    object-fit: scale-down;
     width: 50px;
     height: 50px;
 }
 .treasure{
     background: gold;
+    background-size: cover;
     position: absolute;
     width: 50px;
     height: 50px;
@@ -39,8 +41,16 @@ body{
     height: 50px;
 }
 
+.hole{
+    background:black;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
 .enemy{
     background-image: url('../sprites/scrub-sprite1.jpg');
+    background-size: cover;
     position: absolute;
     width: 50px;
     height: 50px;
@@ -115,10 +125,10 @@ body{
 
 #old-man{
     background-image: url('../sprites/old-man1.jpg');
+    background-size: cover;
     position: absolute;
     height: 50px;
     width: 50px;
-
 }
 
 #entrance{
@@ -128,8 +138,26 @@ body{
     position: absolute;
 }
 
+.ustairs{
+    background: url("../sprites/ustairs-sprite.jpg");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+}
+
 #ustairs{
     background: url("../sprites/ustairs-sprite.jpg");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+}
+
+
+.dstairs{
+    background-image: url("../sprites/dstairs-sprite.jpg");
+    background-size: cover;
     height: 50px;
     width: 50px;
     position: absolute;
@@ -137,9 +165,26 @@ body{
 
 #dstairs{
     background-image: url("../sprites/dstairs-sprite.jpg");
+    background-size: cover;
     height: 50px;
     width: 50px;
     position: absolute;
+}
+
+#blue-door {
+    background: darkblue;
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+}
+
+#red-door {
+    background: darkred;
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    position: absolute;  
 }
 
 #link{

@@ -265,15 +265,12 @@ function isAdjacent(x, y){
 
 function battle(el) {
     alert(`you encountered a ${enemyStats[el].type}`);
-    // let popUp = document.getElementById('battle');
-    // popUp.style.display = "block";
-
     // link always goes first
     while (linkStats.hp > 0 && enemyStats[el].hp > 0) {
         fightRound(el);
         if (linkStats.hp <= 0) {
             alert("you're real dead");
-            popUp.style.display="none";
+            // popUp.style.display="none";
             window.location.replace("./index.html");
         }
         if (enemyStats[el].hp <=0){        
@@ -285,18 +282,6 @@ function battle(el) {
     }
     //  update the menu display
     menuDisplay();
-  // When the user clicks on <span> (x), close the modal
-  let span = document.getElementsByClassName('close')[0];
-  span.onclick = function() {
-    popUp.style.display = "none";
-  }
-  
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == popUp) {
-      popUp.style.display = "none";
-    }
-  }
 }
 
 function fightRound(el) {

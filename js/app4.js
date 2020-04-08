@@ -3,22 +3,53 @@ window.localStorage;
 linkStats = JSON.parse(localStorage.getItem('objString'));
 
 
-const sentinelStats = {
-    hp: 280,
-    damage: 120
-}
+const enemyStats = [
+    {
+    type: "sentinel", 
+    hp: 200,
+    damage: 90,
+    x: 1, 
+    y: 1
+    },
+    {
+    type: "sentinel",
+    hp: 200,
+    damage: 90,
+    x: 7,
+    y: 3
+    }
+]
 
 const treasures = [
-    {x: 3, y: 1},
-    {x: 8, y: 1}
-];
-const enemies = [
-    {x: 1, y: 1},
-    {x: 7, y: 3}
-]
+    {type: "mithril coat",
+    description: "increases hp by 100",
+    x: 8, 
+    y: 5
+    },
+    {type: "red key",
+    description: "unlocks red door",
+    x: 3, 
+    y: 1
+    },
+    {type: "Nelda's necklace",
+    description: "a beautiful antique",
+    x: 8, 
+    y: 1
+}];
+
+const ustairs = {
+    x: 4, y: 3
+};
+
 const dstairs = {
     x: 8, y: 3
-}
+};
+
+const holes= [
+    {x: 5, y: 1},
+    {x: 4, y: 1}
+];
+
 const walls =[
     {x: 0, y: 0},
     {x: 0, y: 1},
@@ -85,7 +116,14 @@ function formBoundaries() {
 };
 // level-specific--UPDATE
 function addMapItems(){
- 
+    for (let i = 0; i < holes.length; i++) {
+        const holeEl = document.createElement('div');
+        const hole = holes[i];
+        holeEl.className ='hole';
+        holeEl.style.left = (hole.x * 50).toString() + 'px';
+        holeEl.style.top = (hole.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(holeEl);
+    } 
     for (let i = 0; i < treasures.length; i++) {
         const treasEl = document.createElement('div');
         const treas = treasures[i];
@@ -230,10 +268,21 @@ function completeMove(x,y) {
             }
     }
     //  this is the exit point--it changes every level
-    if (link.style.top === "250px" && link.style.left === "400px") {
+    if (link.style.top === "150px" && link.style.left === "400px") {
         alert("Nelda awaits");
         localStorage.setItem('objString', JSON.stringify(linkStats));
         window.location.replace("./level5.html");
+    }
+    //  this is to return to the previous screen--it changes every level
+    if (link.style.top === "150px" && link.style.left === "200px") {
+        localStorage.setItem('objString', JSON.stringify(linkStats));
+        window.location.replace("./level3.html");
+    }
+    // if link falls in a hole, it's instant death
+    if ((link.style.top === "50px" && link.style.left === "200px") ||
+    (link.style.top === "50px" && link.style.left === "250px")){
+        alert('you fell in a hole and died badly');
+        window.location.replace("./index.html");
     }
 }
 }
@@ -251,15 +300,12 @@ function isAdjacent(x, y){
 
 function battle(el) {
     alert(`you encountered a ${enemyStats[el].type}`);
-    // let popUp = document.getElementById('battle');
-    // popUp.style.display = "block";
-
     // link always goes first
     while (linkStats.hp > 0 && enemyStats[el].hp > 0) {
         fightRound(el);
         if (linkStats.hp <= 0) {
             alert("you're real dead");
-            popUp.style.display="none";
+            // popUp.style.display="none";
             window.location.replace("./index.html");
         }
         if (enemyStats[el].hp <=0){        
@@ -271,18 +317,6 @@ function battle(el) {
     }
     //  update the menu display
     menuDisplay();
-  // When the user clicks on <span> (x), close the modal
-  let span = document.getElementsByClassName('close')[0];
-  span.onclick = function() {
-    popUp.style.display = "none";
-  }
-  
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == popUp) {
-      popUp.style.display = "none";
-    }
-  }
 }
 
 function fightRound(el) {
