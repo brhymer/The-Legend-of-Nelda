@@ -56,6 +56,14 @@ body{
     height: 50px;
 }
 
+.sentinel{
+    background-image: url('../sprites/sentinel-sprite1.jpg');
+    background-size: cover;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
 .popup {
     display: none; 
     position: fixed; /* Stay in place */
@@ -123,7 +131,7 @@ body{
     padding: 10px 0 0 10px;
 }
 
-#old-man{
+#old-man1{
     background-image: url('../sprites/old-man1.jpg');
     background-size: cover;
     position: absolute;

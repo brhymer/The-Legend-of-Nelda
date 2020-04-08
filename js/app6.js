@@ -1,6 +1,6 @@
 //  underground setup
 window.localStorage;
-linkStats = JSON.parse(localStorage.getItem('objString'));
+all = JSON.parse(localStorage.getItem('objString'));
 // const linkStats = {
 //     hp: 150,
 //     weapon: "adequateSword",
@@ -154,6 +154,17 @@ $(document).keydown(function(e) {
         // go down
         moveDown();
         break;
+      case 80:
+          if (all.linkStats.itemList.includes('potion')) {
+          all.linkStats.hp += 80;
+          
+          let potionIndex = all.linkStats.itemList.indexOf('potion');
+          all.linkStats.itemList.splice(potionIndex,1);
+          menuDisplay();
+          } else {
+          console.log("you don't have a potion")
+          }
+          break;
     }
 });
 
