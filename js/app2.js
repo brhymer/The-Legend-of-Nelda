@@ -3,14 +3,18 @@ window.localStorage;
 linkStats = JSON.parse(localStorage.getItem('objString'));
 const itemList =[];
 
-const enemyStats = [
+if (typeof enemyStats2==='undefined') {
+    
+const enemyStats2 = [
     {
     type: "scrub", 
     hp: 100,
     damage: 50,
     x: 2, 
     y: 2
-}]
+}]} else {
+    enemyStats2 = JSON.parse(localStorage.getItem('enemyStats2'));
+}
 
 const treasures = [
     {type: "candle",
@@ -93,7 +97,7 @@ const walls =[
 
 function placeCharacter(){
     const link = document.createElement('div');
-    link.id='link';
+    link.className='link';
     link.style.left = (linkStats.x * 50).toString() + 'px';
     link.style.top = (linkStats.y * 50).toString() + 'px';
     document.querySelector('#board').appendChild(link);
@@ -145,9 +149,9 @@ function addMapItems(){
         bdoorEl.style.top = (blueDoor.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(bdoorEl);  
 
-    for (let i = 0; i < enemyStats.length; i++) {
+    for (let i = 0; i < enemyStats2.length; i++) {
         const enemyEl = document.createElement('div');
-        const enemy = enemyStats[i];
+        const enemy = enemyStats2[i];
         enemyEl.className ='enemy';
         enemyEl.id='enemy' + i;
         enemyEl.style.left = (enemy.x * 50).toString() + 'px';
@@ -186,28 +190,36 @@ function moveLeft() {
 
     if (allowMove(linkStats.x-1, linkStats.y)){
         linkStats.x--;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id = 'ltlink';
     }
 }
 function moveUp() {
 
     if (allowMove(linkStats.x, linkStats.y-1)){
         linkStats.y--;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='uplink';
     }
 }
 function moveRight() {
 
     if (allowMove(linkStats.x+1, linkStats.y)){
         linkStats.x++;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='rtlink';
     }
 }
 function moveDown() {
 
     if (allowMove(linkStats.x, linkStats.y+1)){
         linkStats.y++;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='dnlink';
     }
 }
 
@@ -235,8 +247,8 @@ function findObstacles(x,y) {
             return true;
         }
     }
-    for (let i = 0; i < enemyStats.length; i++) {
-        const enemy = enemyStats[i];
+    for (let i = 0; i < enemyStats2.length; i++) {
+        const enemy = enemyStats2[i];
         if (enemy.x === x && enemy.y === y) {
             return true;
     }
@@ -248,7 +260,7 @@ function findObstacles(x,y) {
 }
 
 function completeMove(x,y) {
-    link = document.getElementById('link');
+    link = document.querySelector('.link');
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
 
@@ -263,11 +275,11 @@ function completeMove(x,y) {
         }
     }
     // if enemies exist
-    if (enemyStats) {
-        for (let i = 0; i < enemyStats.length; i++) {
+    if (enemyStats2) {
+        for (let i = 0; i < enemyStats2.length; i++) {
             let enemy = document.getElementsByClassName('enemy');
             //  if you move next to an enemy, battle will initiate.
-            if (isAdjacent(enemyStats[i].x, enemyStats[i].y)) {
+            if (isAdjacent(enemyStats2[i].x, enemyStats2[i].y)) {
                 let el = enemy[i].id.substring(5,6);
                 battle(el);
             }
@@ -277,11 +289,13 @@ function completeMove(x,y) {
        (link.style.top === "250px" && link.style.left === "250px")) {
         alert("you don't know what you're getting into");
         localStorage.setItem('objString', JSON.stringify(linkStats));
+        localStorage.setItem('enemies2', JSON.stringify(enemyStats2));
         window.location.replace("./level3.html");
     }
     //  this is to return to the previous screen--it changes every level
     if (link.style.top === "50px" && link.style.left === "200px") {
         localStorage.setItem('objString', JSON.stringify(linkStats));
+        localStorage.setItem('enemies2', JSON.stringify(enemyStats2));
         window.location.replace("./level1.html");
     }
     
@@ -300,18 +314,18 @@ function isAdjacent(x, y){
 }
 
 function battle(el) {
-    alert(`you encountered a ${enemyStats[el].type}`);
+    alert(`you encountered a ${enemyStats2[el].type}`);
     // link always goes first
-    while (linkStats.hp > 0 && enemyStats[el].hp > 0) {
+    while (linkStats.hp > 0 && enemyStats2[el].hp > 0) {
         fightRound(el);
         if (linkStats.hp <= 0) {
             alert("you're real dead");
             // popUp.style.display="none";
             window.location.replace("./index.html");
         }
-        if (enemyStats[el].hp <=0){        
-            // enemyStats.pop();
-            // alert(enemyStats[el])
+        if (enemyStats2[el].hp <=0){        
+            // enemyStats2.pop();
+            // alert(enemyStats2[el])
             removeEnemy(el);
             alert("The scrub was vanquished!");
             break;
@@ -325,11 +339,11 @@ function fightRound(el) {
     // link always goes first
     let linkAtt = Math.floor(Math.random()*linkStats.damage);
     alert("Link attacks with " + linkStats.weapon + ":" + linkAtt + " damage!");
-    enemyStats[el].hp -=linkAtt;
-    if (enemyStats[el].hp >= 0) {
+    enemyStats2[el].hp -=linkAtt;
+    if (enemyStats2[el].hp >= 0) {
     // then the enemy goes
-        let enemyAtt = Math.floor(Math.random()*enemyStats[el].damage);
-        alert(`The ${enemyStats[el].type} attacks:  ${enemyAtt} damage!`);
+        let enemyAtt = Math.floor(Math.random()*enemyStats2[el].damage);
+        alert(`The ${enemyStats2[el].type} attacks:  ${enemyAtt} damage!`);
         linkStats.hp-=enemyAtt;
         menuDisplay();
     }
@@ -344,7 +358,7 @@ function getItem(el){
 }
 function removeEnemy(el){
     let gone = document.getElementById("enemy" + el);
-    enemyStats.splice(el, 1);
+    enemyStats2.splice(el, 1);
     gone.remove();
  }
 

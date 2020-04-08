@@ -131,6 +131,14 @@ body{
     width: 50px;
 }
 
+#old-man2{
+    background-image: url('../sprites/old-man2.jpg');
+    background-size: cover;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+}
+
 #entrance{
     background: black;
     height: 50px;
@@ -187,8 +195,35 @@ body{
     position: absolute;  
 }
 
-#link{
-    background: green;
+.link{
+    background-image: url("../sprites/ltlink-sprite.jpg");
+    position: absolute;
+    height: 50px;
+    width: 50px;
+}
+
+#ltlink{
+    background-image: url("../sprites/ltlink-sprite.jpg");
+    position: absolute;
+    height: 50px;
+    width: 50px;
+}
+#uplink{
+    background-image: url("../sprites/uplink-sprite.jpg");
+    position: absolute;
+    height: 50px;
+    width: 50px;
+}
+
+#rtlink{
+    background-image: url("../sprites/rtlink-sprite.jpg");
+    position: absolute;
+    height: 50px;
+    width: 50px;
+}
+
+#dnlink{
+    background-image: url("../sprites/dnlink-sprite.jpg");
     position: absolute;
     height: 50px;
     width: 50px;
@@ -218,4 +253,6 @@ body{
    color: aliceblue;
  }
  
-
+#words{
+    color:darkblue
+}

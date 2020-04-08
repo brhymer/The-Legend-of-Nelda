@@ -1,8 +1,9 @@
 //  2nd basement setup
 window.localStorage;
 linkStats = JSON.parse(localStorage.getItem('objString'));
+enemyStats2 = JSON.parse(localStorage.getItem('enemyStats2'));
 const itemList = [];
-const enemyStats = [
+const enemyStats3 = [
     {
     type: "scrub", 
     hp: 100,
@@ -35,6 +36,9 @@ const treasures = [
     y: 4
 }];
 
+const oldManPos =
+    {x: 4, y: 4};
+
 const ustairs = [
     {x: 3, y: 5},
     {x: 5, y: 5}
@@ -49,7 +53,6 @@ const redDoor = {
 };
 
 const holes= [
-    {x: 5, y: 1},
     {x: 4, y: 1}
 ];
 
@@ -100,7 +103,7 @@ const walls =[
 ];
 function placeCharacter(){
     const link = document.createElement('div');
-    link.id='link';
+    link.className='link';
     link.style.left = (linkStats.x * 50).toString() + 'px';
     link.style.top = (linkStats.y * 50).toString() + 'px';
     document.querySelector('#board').appendChild(link);
@@ -118,6 +121,12 @@ function formBoundaries() {
 };
 // level-specific--UPDATE
 function addMapItems(){
+    const oldManEl = document.createElement('div');
+    oldManEl.id ='old-man2';
+    oldManEl.style.left = (oldManPos.x * 50).toString() + 'px';
+    oldManEl.style.top = (oldManPos.y * 50).toString() + 'px';
+    document.querySelector('#board').appendChild(oldManEl);
+
     for (let i = 0; i < holes.length; i++) {
         const holeEl = document.createElement('div');
         const hole = holes[i];
@@ -155,9 +164,9 @@ function addMapItems(){
         rdoorEl.style.top = (redDoor.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(rdoorEl);  
 
-    for (let i = 0; i < enemyStats.length; i++) {
+    for (let i = 0; i < enemyStats3.length; i++) {
         const enemyEl = document.createElement('div');
-        const enemy = enemyStats[i];
+        const enemy = enemyStats3[i];
         enemyEl.className ='enemy';
         enemyEl.id='enemy' + i;
         enemyEl.style.left = (enemy.x * 50).toString() + 'px';
@@ -196,28 +205,36 @@ function moveLeft() {
 
     if (allowMove(linkStats.x-1, linkStats.y)){
         linkStats.x--;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id = 'ltlink';
     }
 }
 function moveUp() {
 
     if (allowMove(linkStats.x, linkStats.y-1)){
         linkStats.y--;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='uplink';
     }
 }
 function moveRight() {
 
     if (allowMove(linkStats.x+1, linkStats.y)){
         linkStats.x++;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='rtlink';
     }
 }
 function moveDown() {
 
     if (allowMove(linkStats.x, linkStats.y+1)){
         linkStats.y++;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='dnlink';
     }
 }
 
@@ -245,8 +262,8 @@ function findObstacles(x,y) {
             return true;
         }
     }
-    for (let i = 0; i < enemyStats.length; i++) {
-        const enemy = enemyStats[i];
+    for (let i = 0; i < enemyStats3.length; i++) {
+        const enemy = enemyStats3[i];
         if (enemy.x === x && enemy.y === y) {
             return true;
     }
@@ -255,7 +272,7 @@ function findObstacles(x,y) {
 }
 
 function completeMove(x,y) {
-    link = document.getElementById('link');
+    link = document.querySelector('.link');
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
 
@@ -270,25 +287,27 @@ function completeMove(x,y) {
         }
     }
     // if enemies exist
-    if (enemyStats) {
-        for (let i = 0; i < enemyStats.length; i++) {
+    // if (enemyStats) {
+        for (let i = 0; i < enemyStats3.length; i++) {
             let enemy = document.getElementsByClassName('enemy');
             //  if you move next to an enemy, battle will initiate.
-            if (isAdjacent(enemyStats[i].x, enemyStats[i].y)) {
+            if (isAdjacent(enemyStats3[i].x, enemyStats3[i].y)) {
                 let el = enemy[i].id.substring(5,6);
                 battle(el);
             }
-    }
+    // }
     //  this is the exit point--it changes every level
     if (link.style.top === "150px" && link.style.left === "200px") {
         alert("you're gonna die here");
         localStorage.setItem('objString', JSON.stringify(linkStats));
+        localStorage.setItem('enemies2', JSON.stringify(enemyStats3));
         window.location.replace("./level4.html");
     }
     //  this is to return to the previous screen--it changes every level
     if ((link.style.top === "250px" && link.style.left === "150px") ||
     (link.style.top === "250px" && link.style.left === "250px")){
         localStorage.setItem('objString', JSON.stringify(linkStats));
+        localStorage.setItem('enemies2', JSON.stringify(enemyStats3));
         window.location.replace("./level2.html");
     }
     // if link falls in a hole, it's instant death
@@ -320,18 +339,16 @@ function isAdjacent(x, y){
 }
 
 function battle(el) {
-    alert(`you encountered a ${enemyStats[el].type}`);
+    alert(`you encountered a ${enemyStats3[el].type}`);
     // link always goes first
-    while (linkStats.hp > 0 && enemyStats[el].hp > 0) {
+    while (linkStats.hp > 0 && enemyStats3[el].hp > 0) {
         fightRound(el);
         if (linkStats.hp <= 0) {
             alert("you're real dead");
             // popUp.style.display="none";
             window.location.replace("./index.html");
         }
-        if (enemyStats[el].hp <=0){        
-            // enemyStats.pop();
-            // alert(enemyStats[el])
+        if (enemyStats3[el].hp <=0){        
             removeEnemy(el);
             alert("The scrub was vanquished!");
             break;
@@ -345,11 +362,11 @@ function fightRound(el) {
     // link always goes first
     let linkAtt = Math.floor(Math.random()*linkStats.damage);
     alert("Link attacks with " + linkStats.weapon + ":" + linkAtt + " damage!");
-    enemyStats[el].hp -=linkAtt;
-    if (enemyStats[el].hp >= 0) {
+    enemyStats3[el].hp -=linkAtt;
+    if (enemyStats3[el].hp >= 0) {
     // then the enemy goes
-        let enemyAtt = Math.floor(Math.random()*enemyStats[el].damage);
-        alert(`The ${enemyStats[el].type} attacks:  ${enemyAtt} damage!`);
+        let enemyAtt = Math.floor(Math.random()*enemyStats3[el].damage);
+        alert(`The ${enemyStats3[el].type} attacks:  ${enemyAtt} damage!`);
         linkStats.hp-=enemyAtt;
         menuDisplay();
     }
@@ -364,7 +381,7 @@ function getItem(el){
 }
 function removeEnemy(el){
     let gone = document.getElementById("enemy" + el);
-    enemyStats.splice(el, 1);
+    enemyStats3.splice(el, 1);
     gone.remove();
  }
 
@@ -389,7 +406,49 @@ addMapItems();
 placeCharacter();
 menuDisplay();
 
+const popUp = document.getElementById("talk");
 
+// Click the old man to open the dialogue box
+const clickOM = document.getElementById("old-man");
+
+// The X to close the popup
+const span = document.getElementsByClassName("close")[0];
+
+// when player clicks on the old man, open the dialogue
+clickOM.onclick = function() {
+  let words = document.getElementById('words');
+  popUp.style.display = "block";
+  let randomIndex = Math.floor(Math.random()*3)
+  let message = [
+      "Bring me something nice, I'll give you this key",
+      "...? Never heard of her.  You must mean Nelda.",
+      ""
+  ]
+  if (linkStats.weapon==="bare hands") {
+    words.innerText ="You're gonna need a weapon if you're going in there.  Take this."
+    alert('you received the Adequate Sword!')
+    linkStats.weapon="Adequate Sword";
+    linkStats.damage=80;
+
+  } else {
+    words.innerText = message[randomIndex];
+    randomIndex = Math.floor(Math.random()*3)
+  }
+  menuDisplay();
+
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  popUp.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == popUp) {
+    popUp.style.display = "none";
+  }
+}
 
 
 

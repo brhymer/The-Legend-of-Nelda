@@ -22,8 +22,7 @@ const oldManPos =
     {x: 4, y: 4};
 
 const treasures = [
-    {x: 2, y: 6},
-    {x: 3, y: 3}
+    {x: 2, y: 2}
 ];
 
 const rocks =[
@@ -68,7 +67,7 @@ const rocks =[
 
 function placeCharacter(){
     const link = document.createElement('div');
-    link.id='link';
+    link.className='link';
     link.style.left = (linkStats.x * 50).toString() + 'px';
     link.style.top = (linkStats.y * 50).toString() + 'px';
     document.querySelector('#board').appendChild(link);
@@ -138,28 +137,36 @@ function moveLeft() {
 
     if (allowMove(linkStats.x-1, linkStats.y)){
         linkStats.x--;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id = 'ltlink';
     }
 }
 function moveUp() {
 
     if (allowMove(linkStats.x, linkStats.y-1)){
         linkStats.y--;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='uplink';
     }
 }
 function moveRight() {
 
     if (allowMove(linkStats.x+1, linkStats.y)){
         linkStats.x++;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='rtlink';
     }
 }
 function moveDown() {
 
     if (allowMove(linkStats.x, linkStats.y+1)){
         linkStats.y++;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='dnlink';
     }
 }
 
@@ -196,7 +203,7 @@ function findObstacles(x,y) {
 }
 
 function completeMove(x,y) {
-    link = document.getElementById('link');
+    link = document.querySelector('.link');
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
     
@@ -274,9 +281,9 @@ clickOM.onclick = function() {
   popUp.style.display = "block";
   let randomIndex = Math.floor(Math.random()*3)
   let message = [
-      "Don't sue me",
-      "Look out for purple guys",
-      "Nelda is weak to lightning"
+      "Bring me something nice, I'll give you this key",
+      "...? Never heard of her.  You must mean Nelda.",
+      ""
   ]
   if (linkStats.weapon==="bare hands") {
     words.innerText ="You're gonna need a weapon if you're going in there.  Take this."

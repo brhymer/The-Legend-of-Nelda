@@ -98,7 +98,7 @@ const walls =[
 
 function placeCharacter(){
     const link = document.createElement('div');
-    link.id='link';
+    link.className='link';
     link.style.left = (linkStats.x * 50).toString() + 'px';
     link.style.top = (linkStats.y * 50).toString() + 'px';
     document.querySelector('#board').appendChild(link);
@@ -184,36 +184,37 @@ function moveLeft() {
 
     if (allowMove(linkStats.x-1, linkStats.y)){
         linkStats.x--;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id = 'ltlink';
     }
 }
 function moveUp() {
 
     if (allowMove(linkStats.x, linkStats.y-1)){
         linkStats.y--;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='uplink';
     }
 }
 function moveRight() {
 
     if (allowMove(linkStats.x+1, linkStats.y)){
         linkStats.x++;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='rtlink';
     }
 }
 function moveDown() {
 
     if (allowMove(linkStats.x, linkStats.y+1)){
         linkStats.y++;
-        completeMove(linkStats.x, linkStats.y)
+        completeMove(linkStats.x, linkStats.y);
+        link = document.querySelector('.link');
+        link.id='dnlink';
     }
-}
-
-function withinMap (x,y){
-    if (x < 0 || y < 0 || x > 9 || y > 6) {
-        return false;
-    }
-    return true;
 }
 
 function allowMove(x,y) {
@@ -243,7 +244,7 @@ function findObstacles(x,y) {
 }
 
 function completeMove(x,y) {
-    link = document.getElementById('link');
+    link = document.querySelector('.link');
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
 
