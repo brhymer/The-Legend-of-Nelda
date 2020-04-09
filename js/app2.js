@@ -266,7 +266,7 @@ function fightRound(el) {
         } else {
         linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
     };
-    alert("Link attacks with the" + all.linkStats.weapon + ":" + linkAtt + " damage!");
+    alert("Link attacks with the " + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats2[el].hp -=linkAtt;
     if (all.enemyStats2[el].hp >= 0) {
     // then the enemy goes
