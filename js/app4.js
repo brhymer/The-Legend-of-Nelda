@@ -38,6 +38,7 @@ function addMapItems(){
         treasEl.style.left = (treas.x * 50).toString() + 'px';
         treasEl.style.top = (treas.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(treasEl);
+    }
         const ustairsEl = document.createElement('div');
         ustairsEl.id ='ustairs';
         ustairsEl.style.left = (all.ustairs4.x * 50).toString() + 'px';
@@ -48,7 +49,6 @@ function addMapItems(){
         dstairsEl.style.left = (all.dstairs4.x * 50).toString() + 'px';
         dstairsEl.style.top = (all.dstairs4.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(dstairsEl);  
-    }
     for (let i = 0; i < all.enemyStats4.length; i++) {
         const enemyEl = document.createElement('div');
         const enemy = all.enemyStats4[i];
@@ -171,8 +171,6 @@ function completeMove(x,y) {
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
 
-    // if a treasure is there
-    // if (treasures) {
         for (let i = 0; i < all.treasures4.length; i++) {
             let treas = document.getElementsByClassName('treasure');
             if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
@@ -180,9 +178,6 @@ function completeMove(x,y) {
                 getItem(el);
             }
         }
-    // }
-    // if enemies exist
-    // if (enemyStats) {
         for (let i = 0; i < all.enemyStats4.length; i++) {
             let enemy = document.getElementsByClassName('sentinel');
             //  if you move next to an enemy, battle will initiate.
@@ -229,7 +224,6 @@ function battle(el) {
         fightRound(el);
         if (all.linkStats.hp <= 0) {
             alert("you're real dead");
-            // popUp.style.display="none";
             window.location.replace("./index.html");
         }
         if (all.enemyStats4[el].hp <=0){        
@@ -244,7 +238,7 @@ function battle(el) {
 
 function fightRound(el) {
     // link always goes first, causes at least 20 damage
-    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), 20);
+    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
     alert("Link attacks with " + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats4[el].hp -=linkAtt;
     if (all.enemyStats4[el].hp >= 0) {
@@ -257,9 +251,9 @@ function fightRound(el) {
 };
 
 function getItem(el){
-    console.log("You got a " + all.treasures4[el].type);
-    all.linkStats.items.push(all.treasures4[el]);
-    all.linkStats.itemList.push(all.treasures2[el].type);
+    alert("You got " + all.treasures4[el].type + "\n(" + all.treasures4[el].description+")");
+    // all.linkStats.items.push(all.treasures1[el]);
+    all.linkStats.itemList.push(all.treasures4[el].type);
     menuDisplay();
     removeTreas(el);
 }

@@ -27,7 +27,6 @@ function addMapItems(){
     oldManEl.style.left = (all.oldManPos3.x * 50).toString() + 'px';
     oldManEl.style.top = (all.oldManPos3.y * 50).toString() + 'px';
     document.querySelector('#board').appendChild(oldManEl);
-
     for (let i = 0; i < all.holes3.length; i++) {
         const holeEl = document.createElement('div');
         const hole = all.holes3[i];
@@ -183,7 +182,7 @@ function findObstacles(x,y) {
     if (all.redDoor.x === x && all.redDoor.y === y) {     
         return true;   
     }
-    if (all.oldManPos1.x === x && all.oldManPos1.y === y) {
+    if (all.oldManPos3.x === x && all.oldManPos3.y === y) {
         return true;
     }
     return false;
@@ -194,8 +193,6 @@ function completeMove(x,y) {
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
 
-    // if a treasure is there
-    // if (treasures) {
         for (let i = 0; i < all.treasures3.length; i++) {
             let treas = document.getElementsByClassName('treasure');
             if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
@@ -203,9 +200,6 @@ function completeMove(x,y) {
                 getItem(el);
             }
         }
-    // }
-    // if enemies exist
-    // if (enemyStats) {
         for (let i = 0; i < all.enemyStats3.length; i++) {
             let enemy = document.getElementsByClassName('enemy');
             //  if you move next to an enemy, battle will initiate.
@@ -238,7 +232,8 @@ function completeMove(x,y) {
     (all.linkStats.weapon==="bare hands" || all.linkStats.weapon==="Adequate Sword")) {
         alert("you found the partizan!");
         all.linkStats.weapon="Partizan";
-        all.linkStats.damage="120";
+        all.linkStats.damage=120;
+        all.linkStats.damageFloor=70;
         menuDisplay();
     }
     // }
@@ -262,8 +257,6 @@ function battle(el) {
         fightRound(el);
         if (all.linkStats.hp <= 0) {
             alert("you're real dead");
-            // popUp.style.display="none";
-            localStorage.clear();
             window.location.replace("./index.html");
         }
         if (all.enemyStats3[el].hp <=0){        
@@ -278,7 +271,7 @@ function battle(el) {
 
 function fightRound(el) {
     // link always goes first, causes at least 20 damage
-    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), 20);
+    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
     alert("Link attacks with " + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats3[el].hp -=linkAtt;
     if (all.enemyStats3[el].hp >= 0) {
@@ -291,8 +284,8 @@ function fightRound(el) {
 };
 
 function getItem(el){
-    console.log("You got a " + all.treasures3[el].type);
-    all.linkStats.items.push(all.treasures3[el]);
+    alert("You got a " + all.treasures3[el].type + "\n(" + all.treasures3[el].description+")");
+    // all.linkStats.items.push(all.treasures3[el]);
     all.linkStats.itemList.push(all.treasures3[el].type);
     menuDisplay();
     removeTreas(el);
@@ -324,25 +317,20 @@ addMapItems();
 placeCharacter();
 menuDisplay();
 
-const popUp = document.getElementById("talk");
-
+popUp = document.getElementById("talk");
+let message = [
+    "Beware of Nelda's lightning",
+    "There's a secret beyond the blue door",
+    "Thanks for letting me out"
+]
 // Click the old man to open the dialogue box
 const clickOM = document.getElementById("old-man1");
-
-// The X to close the popup
-const span = document.getElementsByClassName("close")[0];
-
-// when player clicks on the old man, open the dialogue
 clickOM.onclick = function() {
-  let words = document.getElementById('words');
+  words = document.getElementById('words');
   popUp.style.display = "block";
-  let randomIndex = Math.floor(Math.random()*3)
-  let message = [
-      "Beware of Nelda's lightning",
-      "There's a secret beyond the blue door",
-      "Thanks for letting me out"
-  ]
-
+  randomIndex = Math.floor(Math.random()*3)
+  words.innerText=message[randomIndex]
+;
   menuDisplay();
 
 }
@@ -350,14 +338,12 @@ clickOM.onclick = function() {
 const popUp2 = document.getElementById("open");
 
 // Click the door to open the dialogue box
-const clickOM2 = document.getElementById("red-door");
-
-// when player clicks on the door, open the dialogue
+const click2 = document.getElementById("red-door");
 if (all.linkStats.itemList.includes('red key')) {
-    clickOM2.onclick = function() {
+    click2.onclick = function() {
   choice = confirm('use the red key?')
   if (choice){
-  clickOM2.remove();
+  click2.remove();
   all.redDoor.x= 100;
   all.redDoor.y=100;
   redkeyIndex = all.linkStats.itemList.indexOf('red key');
@@ -369,16 +355,5 @@ if (all.linkStats.itemList.includes('red key')) {
     }
 }
 
-// When the user clicks X, close the popup
-span.onclick = function() {
-  popUp.style.display = "none";
-}
-
-// When the user clicks outside of the popup, close it
-window.onclick = function(event) {
-  if (event.target == popUp) {
-    popUp.style.display = "none";
-  }
-}
 
 

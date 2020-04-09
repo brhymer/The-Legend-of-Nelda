@@ -2,10 +2,10 @@ const all = {
     linkStats: {
         hp: 150,
         weapon: "bare hands",
-        damage: "300",
+        damage: "20",
+        damageFloor: "10", 
         x: 6, 
         y: 6,
-        items: [],
         itemList: []
     },
     entrance: {
@@ -165,7 +165,7 @@ const all = {
     ], 
     treasures3: [
         {type: "rubber soles",
-        description: "helps protect against lightnight attacks",
+        description: "helps protect against lightning attacks",
         x: 1, 
         y: 4
         },
@@ -268,7 +268,7 @@ const all = {
         y: 1
         },
         {type: "Nelda's ring",
-        description: "a tasteful and understated silver diamond ring",
+        description: "a tasteful and understated silver-banded diamond ring",
         x: 8, 
         y: 1
         },
@@ -474,11 +474,11 @@ const all = {
         {x: 9, y: 6}
     ],
     ustairs6: {
-        x: 4, y: 3
+        x: 3, y: 3
     },
     treasures6: [
         {type: "the Biforce",
-        desciption: "67% as good as the triforce",
+        description: "67% as good as the triforce",
         x: 7, 
         y: 3}
     ],

@@ -215,12 +215,13 @@ function completeMove(x,y) {
         window.location.replace("./level1.html");
     }
     //  secret door!
-    if (all.linkStats.itemList.includes('wind key')){
-        if (link.style.top === "100px" && link.style.left === "450px") {
+    if (link.style.top === "100px" && link.style.left === "450px") {
+        if  (all.linkStats.itemList.includes('wind key')){
             localStorage.setItem('objString', JSON.stringify(all));
             window.location.replace("./secret.html");
         } else {
-        alert('some force is blocking you')    
+        alert('some force is blocking you');    
+        link.style.left = '400px';
     }
 } 
 }
@@ -260,7 +261,7 @@ function battle(el) {
 
 function fightRound(el) {
     // link always goes first, causes at least 20 damage
-    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), 20);
+    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
     alert("Link attacks with " + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats2[el].hp -=linkAtt;
     if (all.enemyStats2[el].hp >= 0) {
@@ -273,8 +274,8 @@ function fightRound(el) {
 };
 
 function getItem(el){
-    console.log("You got a " + all.treasures2[el].type);
-    all.linkStats.items.push(all.treasures2[el]);
+    alert("You got a " + all.treasures2[el].type + "\n(" + all.treasures2[el].description+")");
+    // all.linkStats.items.push(all.treasures2[el]);
     all.linkStats.itemList.push(all.treasures2[el].type);
     menuDisplay();
     removeTreas(el);
@@ -287,7 +288,7 @@ function removeEnemy(el){
 
 function removeTreas(el){
     let gone = document.getElementById("treas" + el);
-    // all.treasures2.splice(el, 1);
+    all.treasures2.splice(el, 1);
     gone.remove();
  }
 
@@ -332,14 +333,3 @@ if (all.linkStats.itemList.includes('blue key')) {
     }
 }
 
-// When the user clicks X, close the popup
-span.onclick = function() {
-  popUp.style.display = "none";
-}
-
-// When the user clicks outside of the popup, close it
-window.onclick = function(event) {
-  if (event.target == popUp) {
-    popUp.style.display = "none";
-  }
-}

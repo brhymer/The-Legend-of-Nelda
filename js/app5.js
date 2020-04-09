@@ -201,7 +201,6 @@ function completeMove(x,y) {
     }
     //  this is to return to the previous screen--it changes every level
     if (link.style.top === "150px" && link.style.left === "400px") {
-            alert("you don't know what you're getting into");
             localStorage.setItem('objString', JSON.stringify(all));
             window.location.replace("./level4.html");
     }
@@ -250,7 +249,7 @@ function battle(el) {
 
 function fightRound(el) {
     // link always goes first, causes at least 20 damage
-    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), 20);
+    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
     alert("Link attacks with " + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats5[el].hp -=linkAtt;
     if (all.enemyStats5[el].hp >= 0) {
@@ -263,8 +262,8 @@ function fightRound(el) {
 };
 
 function getItem(el){
-    console.log("You got a " + all.treasures5[el].type);
-    all.linkStats.items.push(all.treasures5[el]);
+    alert("You got " + all.treasures5[el].type + "\n(" + all.treasures5[el].description+")");
+    // all.linkStats.items.push(all.treasures5[el]);
     all.linkStats.itemList.push(all.treasures5[el].type);
     menuDisplay();
     removeTreas(el);

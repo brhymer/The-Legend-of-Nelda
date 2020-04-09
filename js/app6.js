@@ -46,7 +46,7 @@ function addMapItems(){
     for (let i = 0; i < all.enemyStats6.length; i++) {
         const enemyEl = document.createElement('div');
         const enemy = all.enemyStats6[i];
-        enemyEl.className ='shadow-Nelda';
+        enemyEl.className ='nelda';
         enemyEl.id='enemy' + i;
         enemyEl.style.left = (enemy.x * 50).toString() + 'px';
         enemyEl.style.top = (enemy.y * 50).toString() + 'px';
@@ -174,7 +174,7 @@ function completeMove(x,y) {
             }
         }
         for (let i = 0; i < all.enemyStats6.length; i++) {
-            let enemy = document.getElementsByClassName('shadow-Nelda');
+            let enemy = document.getElementsByClassName('nelda');
             //  if you move next to an enemy, battle will initiate.
             if (isAdjacent(all.enemyStats6[i].x, all.enemyStats6[i].y)) {
                 let el = enemy[i].id.substring(5,6);
@@ -191,9 +191,7 @@ function completeMove(x,y) {
         holex = all.holes6[i].x;
         holey = all.holes6[i].y;
         if (all.linkStats.x===holex && all.linkStats.y===holey){
-        alert('you fell in a hole and died badly');
-        localStorage.clear();
-        window.location.replace("./index.html");
+        window.location.replace("./endgame4.html");
         }
 }
 }
@@ -210,7 +208,7 @@ function isAdjacent(x, y){
 }
 
 function battle(el) {
-    alert(`you encountered the ${all.enemyStats6[el].type}`);
+    alert(`you encountered ${all.enemyStats6[el].type}`);
     // link always goes first
     while (all.linkStats.hp > 0 && all.enemyStats6[el].hp > 0) {
         fightRound(el);
@@ -222,7 +220,7 @@ function battle(el) {
         }
         if (all.enemyStats6[el].hp <=0){        
             removeEnemy(el);
-            alert("Nelda's Shadow was vanquished!");
+            alert("Nelda was vanquished!");
             break;
         }
     }
@@ -231,8 +229,7 @@ function battle(el) {
 }
 
 function fightRound(el) {
-    // link always goes first, causes at least 20 damage
-    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), 20);
+    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
     alert("Link attacks with " + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats6[el].hp -=linkAtt;
     if (all.enemyStats6[el].hp >= 0) {
@@ -245,8 +242,8 @@ function fightRound(el) {
 };
 
 function getItem(el){
-    console.log("You got a " + all.treasures6[el].type);
-    all.linkStats.items.push(all.treasures6[el]);
+    alert("You got " + all.treasures6[el].type + "\n(" + all.treasures6[el].description+")");
+    // all.linkStats.items.push(all.treasures6[el]);
     all.linkStats.itemList.push(all.treasures6[el].type);
     menuDisplay();
     removeTreas(el);

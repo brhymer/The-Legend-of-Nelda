@@ -22,7 +22,6 @@ function formBoundaries() {
 };
 // level-specific--UPDATE
 function addMapItems(){
- 
     const oldManEl = document.createElement('div');
     oldManEl.id ='old-man1';
     oldManEl.style.left = (all.oldManPos1.x * 50).toString() + 'px';
@@ -154,8 +153,6 @@ function completeMove(x,y) {
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
     
-    // if a treasure is there
-    // if (treasures) {
         for (let i = 0; i < all.treasures1.length; i++) {
             let treas = document.getElementsByClassName('treasure');
             if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
@@ -163,15 +160,11 @@ function completeMove(x,y) {
                 getItem(el);
             }
         }
-    // }
 
     //  this is the exit point--it changes every level
     if (link.style.top === "50px" && link.style.left === "200px") {
         alert("you are entering Nelda's tomb");
-
-        // put linkStats into storage
         localStorage.setItem('objString', JSON.stringify(all));
-    
         window.location.replace("./level2.html");
     
     }
@@ -189,8 +182,8 @@ function isAdjacent(x, y){
 }
 
 function getItem(el){
-    console.log("You got a " + all.treasures1[el].type);
-    all.linkStats.items.push(all.treasures1[el]);
+    alert("You got a " + all.treasures1[el].type + "\n(" + all.treasures1[el].description+")");
+    // all.linkStats.items.push(all.treasures1[el]);
     all.linkStats.itemList.push(all.treasures1[el].type);
     menuDisplay();
     removeTreas(el);
@@ -253,7 +246,7 @@ clickOM.onclick = function() {
         }
     }
     if (all.linkStats.itemList.includes("the Biforce")){
-        finish = confirm('You have the Biforce...! Dear god, what will happen to us?');
+        finish = confirm('You have the Biforce...! Dear god, what will become of us? \nH-h-hail, dark master!');
         if (finish){
             localStorage.clear();
             window.location.replace("./endgame1.html");
@@ -264,6 +257,7 @@ clickOM.onclick = function() {
     alert('you received the Adequate Sword!')
     all.linkStats.weapon="Adequate Sword";
     all.linkStats.damage=80;
+    all.linkStats.damageFloor=40;
   
   } else {
     words.innerText = message[randomIndex];
@@ -280,5 +274,5 @@ function menuDisplay(){
     weaponDisplay = document.getElementById('weapon')
     weaponDisplay.innerText = `Weapon: ${all.linkStats.weapon}`;
     itemDisplay = document.getElementById('items');
-    itemDisplay.innerText = `Items: ${all.linkStats.items}`;
+    itemDisplay.innerText = `Items: ${all.linkStats.itemList}`;
 }

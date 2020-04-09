@@ -1,9 +1,9 @@
 // Secret area
 window.localStorage;
 all = JSON.parse(localStorage.getItem('objString'));
-
+let firstTime = true;
 const faerie ={
-    x: 6, y: 3
+    x: 2, y: 2
 };
 
 const walls=[
@@ -34,6 +34,11 @@ function placeCharacter(){
     link.style.left = (all.linkStats.x * 50).toString() + 'px';
     link.style.top = (all.linkStats.y * 50).toString() + 'px';
     document.querySelector('#secret').appendChild(link);
+    const faeElement = document.createElement('div');
+    faeElement.id ='faerie';
+    faeElement.style.left = (faerie.x * 50).toString() + 'px';
+    faeElement.style.top = (faerie.y * 50).toString() + 'px';
+    document.querySelector('#secret').appendChild(faeElement);
 }
 
 function formBoundaries() {
@@ -153,25 +158,21 @@ function completeMove(x,y) {
     link = document.querySelector('.link');
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
-
-
-    if (link.style.top === "100px" && link.style.left === "250px") {
-        if (all.linkStats.weapon!=="Devastation Rod") {
-        const faeElement = document.createElement('div');
-        faeElement.Id ='faerie';
-        faeElement.style.left = (faerie.x * 50).toString() + 'px';
-        faeElement.style.top = (faerie.y * 50).toString() + 'px';
-        document.querySelector('#secret').appendChild(faeElement);
-        alert("Congratulations on finding me! \n Nelda lived a modest life but was extremely powerful. \nHer essence endures below.  Please put an end to her evil and claim the Biforce.");
-        alert("That's right, the Biforce.  Two squares.")
-        alert("This staff will help you destroy her and whatever else you happen to run into. \nCiao.");
-        alert("You got the Devastation Rod!")
-        all.linkStats.weapon="Devastation Rod";
-        all.linkStats.damage=300;
-        menuDisplay();
-        faeElement.remove();
-        }
+    if ((link.style.top === "100px" && link.style.left === "250px") && (firstTime) && (all.linkStats.weapon!=="Devastation Rod")) {
+        document.getElementById('faerie').style.display='block';
+        alert("Congratulations on finding me!");
     }
+        if ((link.style.top === "100px" && link.style.left === "150px") && (firstTime) && (all.linkStats.weapon!=="Devastation Rod")) {
+            alert("Nelda lived a modest life but was extremely powerful. \nHer essence endures below.  Please put an end to her evil and claim the Biforce.");
+            alert("That's right, the Biforce.  Two squares.")
+            alert("This staff will help you destroy her and whatever else you happen to run into. \nCiao.");
+            alert("You got the Devastation Rod!")
+            all.linkStats.weapon="Devastation Rod";
+            all.linkStats.damage=300;
+            all.linkStats.damageFloor=180
+            menuDisplay();
+            firstTime=false;
+        }
      //  go back
     if (link.style.top === "100px" && link.style.left === "450px") {
         localStorage.setItem('objString', JSON.stringify(all));
@@ -179,7 +180,6 @@ function completeMove(x,y) {
     }
     
 }
-// }
 
 function isAdjacent(x, y){
     if ((x + 1 === all.linkStats.x && y === all.linkStats.y) || 
