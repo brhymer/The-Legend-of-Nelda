@@ -80,15 +80,12 @@ body{
     height: 50px;
 } 
 
-
-/* .popup-content {
-    background-color: #fefefe;
-    text-align: left;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%; 
-  } */
+.link{
+    background-image: url("../sprites/ltlink-sprite.jpg");
+    position: absolute;
+    height: 50px;
+    width: 50px;
+}
 
 #give-up {
     margin: 0 auto;
@@ -193,13 +190,6 @@ body{
     position: absolute;  
 }
 
-.link{
-    background-image: url("../sprites/ltlink-sprite.jpg");
-    position: absolute;
-    height: 50px;
-    width: 50px;
-}
-
 #ltlink{
     background-image: url("../sprites/ltlink-sprite.jpg");
     position: absolute;
@@ -249,6 +239,7 @@ body{
  
 #grave{
     background-image: url("../sprites/grave-sprite.jpg");
+    background-size: cover;
     position: absolute;
     height: 50px;
     width: 50px;
@@ -263,7 +254,7 @@ body{
 #secret{
     display: grid;
     position: relative;
-    /* background:black; */
+    background:black;
     height: 350px;
     width: 500px;
     padding: 0;

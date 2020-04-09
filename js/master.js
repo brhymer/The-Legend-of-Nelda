@@ -17,7 +17,8 @@ const all = {
     treasures1: [
         {type: "potion",
         description: "restores hp", 
-        x: 2, y: 2
+        x: 2, y: 2,
+        found: "no"
     }],
     rocks1: [
         {x: 0, y: 0},
@@ -70,23 +71,26 @@ const all = {
         {type: "potion",
         description: "restores hp",
         x: 6, 
-        y: 1
+        y: 1,
+        found: "no"
         },
         {type: "potion",
         description: "restores hp",
         x: 1, 
-        y: 1
+        y: 1,
+        found: "no"
         },
         {type: "gauntlet",
         description: "raises minimum attack damage",
         x: 8, 
-        y: 4
-        },
-        {type: "dummy item",
-        description: "you can't get it",
-        x: 100,
-        y: 100
+        y: 4,
+        found: "no"
         }],
+        // {type: "dummy item",
+        // description: "you can't get it",
+        // x: 100,
+        // y: 100
+        // }],
     ustairs2: [
         {x: 4, y: 1}
     ],
@@ -151,33 +155,36 @@ const all = {
         {
         type: "scrub", 
         hp: 100,
-        damage: 50,
+        damage: 40,
         x: 7, 
         y: 3
         },
         {
         type: "greater scrub",
         hp: 120,
-        damage: 65,
+        damage: 55,
         x: 3,
         y: 2
         }
     ], 
     treasures3: [
-        {type: "rubber soles",
+        {type: "rubber shield",
         description: "helps protect against lightning attacks",
         x: 1, 
-        y: 4
+        y: 4,
+        found: "no"
         },
         {type: "stylish fedora",
         description: "nice, but not quite for me",
         x: 5, 
-        y: 2
+        y: 2,
+        found: "no"
         },
         {type: "red key",
         description: "unlocks red door",
         x: 8, 
-        y: 1
+        y: 1,
+        found: "no"
     }],
     oldManPos3: {
         x: 1, y: 1
@@ -244,38 +251,44 @@ const all = {
         {
         type: "sentinel", 
         hp: 200,
-        damage: 90,
+        damage: 75,
         x: 1, 
-        y: 1
+        y: 1,
+        dead: "no"
         },
         {
         type: "sentinel",
         hp: 200,
-        damage: 90,
-        x: 6,
-        y: 4
+        damage: 75,
+        x: 7,
+        y: 3,
+        dead: "no"
         }
     ],
     treasures4: [
-        {type: "mithril coat",
+        {type: "Nelda's robe",
         description: "increases hp by 140",
         x: 8, 
-        y: 5
+        y: 5,
+        found: "no"
         },
         {type: "wind key",
         description: "allows passage into a secret area",
         x: 3, 
-        y: 1
+        y: 1,
+        found: "no"
         },
         {type: "Nelda's ring",
         description: "a tasteful and understated silver-banded diamond ring",
         x: 8, 
-        y: 1
+        y: 1,
+        found: "no"
         },
         {type: "Dummy item",
         description: "you can't get it",
         x: 100,
-        y: 100
+        y: 100,
+        found: "no"
     }],
     ustairs4: {
         x: 4, y: 3
@@ -343,22 +356,26 @@ const all = {
         {type: "Nelda's necklace",
         description: "a beautiful antique",
         x: 1, 
-        y: 3
+        y: 3,
+        found: "no"
         },
         {type: "Nelda's sceptre",
         description: "set with a gorgeous ruby",
         x: 2, 
-        y: 2
+        y: 2,
+        found: "no"
         },
         {type: "Nelda's anklet",
         description: "golden and platium ropework with three fine sapphires",
         x: 2, 
-        y: 3
+        y: 3,
+        found: "no"
         },
         {type: "Nelda's grimoire",
         description: "this priceless artifact is what it was all about",
         x: 2,
-        y: 4
+        y: 4,
+        found: "no"
     }],
     ustairs5: {
         x: 8, y: 3
@@ -479,16 +496,17 @@ const all = {
     treasures6: [
         {type: "the Biforce",
         description: "67% as good as the triforce",
-        x: 7, 
-        y: 3}
+        x: 8, 
+        y: 3,
+        found: "no"}
     ],
     enemyStats6: [
         {type: "Nelda herself",
         hp: 560,
         damage: 200,
-        x: 6,
+        x: 7,
         y: 3
-    }]
+    },]
 }
 
 

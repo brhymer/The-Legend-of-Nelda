@@ -38,6 +38,9 @@ function addMapItems(){
         treasEl.style.left = (treas.x * 50).toString() + 'px';
         treasEl.style.top = (treas.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(treasEl);
+        if (all.treasures4[i].found==="yes"){
+        treasEl.style.visibility="hidden";
+        }
     }
         const ustairsEl = document.createElement('div');
         ustairsEl.id ='ustairs';
@@ -57,6 +60,9 @@ function addMapItems(){
         enemyEl.style.left = (enemy.x * 50).toString() + 'px';
         enemyEl.style.top = (enemy.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(enemyEl);
+        if (all.enemyStats4[i].dead==="yes"){
+            enemyEl.style.visibility="hidden";
+        }
     }
 }
 
@@ -159,7 +165,7 @@ function findObstacles(x,y) {
     }
     for (let i = 0; i < all.enemyStats4.length; i++) {
         const enemy = all.enemyStats4[i];
-        if (enemy.x === x && enemy.y === y) {
+        if ((enemy.x === x && enemy.y === y) && (all.enemyStats4[i].dead==="no")) {
             return true;
     }
 }
@@ -173,7 +179,7 @@ function completeMove(x,y) {
 
         for (let i = 0; i < all.treasures4.length; i++) {
             let treas = document.getElementsByClassName('treasure');
-            if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
+            if ((all.linkStats.y === all.treasures4[i].y && all.linkStats.x === all.treasures4[i].x) && (all.treasures4[i].found==='no')) {
                 let el = treas[i].id.substring(5,6);
                 getItem(el);
             }
@@ -181,7 +187,7 @@ function completeMove(x,y) {
         for (let i = 0; i < all.enemyStats4.length; i++) {
             let enemy = document.getElementsByClassName('sentinel');
             //  if you move next to an enemy, battle will initiate.
-            if (isAdjacent(all.enemyStats4[i].x, all.enemyStats4[i].y)) {
+            if ((isAdjacent(all.enemyStats4[i].x, all.enemyStats4[i].y)) && (all.enemyStats4[i].dead==="no")) {
                 let el = enemy[i].id.substring(5,6);
                 battle(el);
             }
@@ -203,11 +209,10 @@ function completeMove(x,y) {
         alert('you fell in a hole and died badly');
         window.location.replace("./index.html");
     }
-// }
 }
 
 function isAdjacent(x, y){
-    if ((x + 1 === all.linkStats.x && y === all.linkStats.y) || 
+    if ((x - 1 === all.linkStats.x && y === all.linkStats.y) || 
     (x + 1 === all.linkStats.x && y === all.linkStats.y) ||
     (x === all.linkStats.x && y+1 === all.linkStats.y) ||
     (x === all.linkStats.x && y-1 === all.linkStats.y)) {
@@ -238,8 +243,12 @@ function battle(el) {
 
 function fightRound(el) {
     // link always goes first, causes at least 20 damage
-    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
-    alert("Link attacks with " + all.linkStats.weapon + ":" + linkAtt + " damage!");
+    if (all.linkStats.itemList.includes("gauntlet")) {
+        linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), (all.linkStats.damageFloor*1.5));
+        } else {
+        linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
+    };
+    alert("Link attacks with the " + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats4[el].hp -=linkAtt;
     if (all.enemyStats4[el].hp >= 0) {
     // then the enemy goes
@@ -252,21 +261,24 @@ function fightRound(el) {
 
 function getItem(el){
     alert("You got " + all.treasures4[el].type + "\n(" + all.treasures4[el].description+")");
-    // all.linkStats.items.push(all.treasures1[el]);
     all.linkStats.itemList.push(all.treasures4[el].type);
+    if (all.treasures4[el].type==="Nelda's robe"){
+        all.linkStats.hp+=140;
+    }
     menuDisplay();
     removeTreas(el);
+
 }
 function removeEnemy(el){
     let gone = document.getElementById("enemy" + el);
-    all.enemyStats4.splice(el, 1);
-    gone.remove();
+    all.enemyStats4[el].dead="yes";
+    gone.style.display="none"
  }
 
 function removeTreas(el){
     let gone = document.getElementById("treas" + el);
-    all.treasures4.splice(el, 1);
-    gone.remove();
+    all.treasures4[el].found="yes";
+    gone.style.display="none";
  }
 
 function menuDisplay(){

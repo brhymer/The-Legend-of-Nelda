@@ -31,6 +31,9 @@ function addMapItems(){
         treasEl.style.left = (treas.x * 50).toString() + 'px';
         treasEl.style.top = (treas.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(treasEl);
+        if (all.treasures2[i].found==="yes"){
+        treasEl.style.visibility="hidden";
+        }
     }
     for (let i = 0; i < all.ustairs2.length; i++) {
         const ustairsEl = document.createElement('div');
@@ -186,10 +189,10 @@ function completeMove(x,y) {
     link = document.querySelector('.link');
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
-
+    
         for (let i = 0; i < all.treasures2.length; i++) {
             let treas = document.getElementsByClassName('treasure');
-            if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
+            if ((all.linkStats.y === all.treasures2[i].y && all.linkStats.x === all.treasures2[i].x) && (all.treasures2[i].found==='no')) {
                 let el = treas[i].id.substring(5,6);
                 getItem(el);
             }
@@ -222,11 +225,11 @@ function completeMove(x,y) {
         } else {
         alert('some force is blocking you');    
         link.style.left = '400px';
-    }
-} 
+        }
+    } 
 }
 function isAdjacent(x, y){
-    if ((x + 1 === all.linkStats.x && y === all.linkStats.y) || 
+    if ((x - 1 === all.linkStats.x && y === all.linkStats.y) || 
     (x + 1 === all.linkStats.x && y === all.linkStats.y) ||
     (x === all.linkStats.x && y+1 === all.linkStats.y) ||
     (x === all.linkStats.x && y-1 === all.linkStats.y)) {
@@ -243,13 +246,10 @@ function battle(el) {
         fightRound(el);
         if (all.linkStats.hp <= 0) {
             alert("you're real dead");
-            // popUp.style.display="none";
             localStorage.clear();
             window.location.replace("./index.html");
         }
         if (all.enemyStats2[el].hp <=0){        
-            // enemyStats2.pop();
-            // alert(enemyStats2[el])
             removeEnemy(el);
             alert("The scrub was vanquished!");
             break;
@@ -261,8 +261,12 @@ function battle(el) {
 
 function fightRound(el) {
     // link always goes first, causes at least 20 damage
-    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
-    alert("Link attacks with " + all.linkStats.weapon + ":" + linkAtt + " damage!");
+    if (all.linkStats.itemList.includes("gauntlet")) {
+        linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), (all.linkStats.damageFloor*1.5));
+        } else {
+        linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
+    };
+    alert("Link attacks with the" + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats2[el].hp -=linkAtt;
     if (all.enemyStats2[el].hp >= 0) {
     // then the enemy goes
@@ -275,7 +279,6 @@ function fightRound(el) {
 
 function getItem(el){
     alert("You got a " + all.treasures2[el].type + "\n(" + all.treasures2[el].description+")");
-    // all.linkStats.items.push(all.treasures2[el]);
     all.linkStats.itemList.push(all.treasures2[el].type);
     menuDisplay();
     removeTreas(el);
@@ -288,8 +291,9 @@ function removeEnemy(el){
 
 function removeTreas(el){
     let gone = document.getElementById("treas" + el);
-    all.treasures2.splice(el, 1);
-    gone.remove();
+    all.treasures2[el].found="yes";
+    gone.style.display="none";
+    // all.treasures2.splice(el, 1);
  }
 
 function menuDisplay(){

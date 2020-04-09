@@ -43,6 +43,9 @@ function addMapItems(){
         treasEl.style.left = (treas.x * 50).toString() + 'px';
         treasEl.style.top = (treas.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(treasEl);
+        if (all.treasures3[i].found==="yes"){
+        treasEl.style.visibility="hidden";
+        }
     }
     for (let i = 0; i < all.ustairs3.length; i++) {
         const ustairsEl = document.createElement('div');
@@ -195,7 +198,7 @@ function completeMove(x,y) {
 
         for (let i = 0; i < all.treasures3.length; i++) {
             let treas = document.getElementsByClassName('treasure');
-            if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
+            if ((all.linkStats.y === all.treasures3[i].y && all.linkStats.x === all.treasures3[i].x) && (all.treasures3[i].found==='no')) {
                 let el = treas[i].id.substring(5,6);
                 getItem(el);
             }
@@ -240,7 +243,7 @@ function completeMove(x,y) {
 }
 
 function isAdjacent(x, y){
-    if ((x + 1 === all.linkStats.x && y === all.linkStats.y) || 
+    if ((x - 1 === all.linkStats.x && y === all.linkStats.y) || 
     (x + 1 === all.linkStats.x && y === all.linkStats.y) ||
     (x === all.linkStats.x && y+1 === all.linkStats.y) ||
     (x === all.linkStats.x && y-1 === all.linkStats.y)) {
@@ -271,8 +274,12 @@ function battle(el) {
 
 function fightRound(el) {
     // link always goes first, causes at least 20 damage
-    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
-    alert("Link attacks with " + all.linkStats.weapon + ":" + linkAtt + " damage!");
+    if (all.linkStats.itemList.includes("gauntlet")) {
+        linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), (all.linkStats.damageFloor*1.5));
+        } else {
+        linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
+    };
+    alert("Link attacks with the " + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats3[el].hp -=linkAtt;
     if (all.enemyStats3[el].hp >= 0) {
     // then the enemy goes
@@ -285,7 +292,6 @@ function fightRound(el) {
 
 function getItem(el){
     alert("You got a " + all.treasures3[el].type + "\n(" + all.treasures3[el].description+")");
-    // all.linkStats.items.push(all.treasures3[el]);
     all.linkStats.itemList.push(all.treasures3[el].type);
     menuDisplay();
     removeTreas(el);
@@ -296,10 +302,10 @@ function removeEnemy(el){
     gone.remove();
  }
 
-function removeTreas(el){
+ function removeTreas(el){
     let gone = document.getElementById("treas" + el);
-    all.treasures3.splice(el, 1);
-    gone.remove();
+    all.treasures3[el].found="yes";
+    gone.style.display="none";
  }
 
 function menuDisplay(){

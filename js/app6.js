@@ -198,7 +198,7 @@ function completeMove(x,y) {
 
 function isAdjacent(x, y){
     if ((x + 1 === all.linkStats.x && y === all.linkStats.y) || 
-    (x + 1 === all.linkStats.x && y === all.linkStats.y) ||
+    (x - 1 === all.linkStats.x && y === all.linkStats.y) ||
     (x === all.linkStats.x && y+1 === all.linkStats.y) ||
     (x === all.linkStats.x && y-1 === all.linkStats.y)) {
         return true;
@@ -229,14 +229,23 @@ function battle(el) {
 }
 
 function fightRound(el) {
-    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
-    alert("Link attacks with " + all.linkStats.weapon + ":" + linkAtt + " damage!");
+    // link always goes first
+    if (all.linkStats.itemList.includes("gauntlet")) {
+        linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), (all.linkStats.damageFloor*1.5));
+        } else {
+        linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), all.linkStats.damageFloor);
+    };
+    alert("Link attacks with the " + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats6[el].hp -=linkAtt;
     if (all.enemyStats6[el].hp >= 0) {
     // then the enemy goes
         let enemyAtt = Math.max(Math.floor(Math.random()*all.enemyStats6[el].damage),10);
         alert(`The ${all.enemyStats6[el].type} attacks:  ${enemyAtt} damage!`);
-        all.linkStats.hp-=enemyAtt;
+        if (all.linkStats.itemList.includes('rubber shield')){
+            all.linkStats.hp-=(enemyAtt/2);
+        } else {
+            all.linkStats.hp-=enemyAtt;
+        }
         menuDisplay();
     }
 };
