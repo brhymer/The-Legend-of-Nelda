@@ -32,7 +32,7 @@ function addMapItems(){
     } 
     for (let i = 0; i < all.treasures5.length; i++) {
         const treasEl = document.createElement('div');
-        const treas = treasures[i];
+        const treas = all.treasures5[i];
         treasEl.className ='treasure';
         treasEl.id='treas' + i;
         treasEl.style.left = (treas.x * 50).toString() + 'px';
@@ -43,11 +43,21 @@ function addMapItems(){
         ustairsEl.style.left = (all.ustairs5.x * 50).toString() + 'px';
         ustairsEl.style.top = (all.ustairs5.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(ustairsEl);  
+        const dstairsEl = document.createElement('div');
+        dstairsEl.id ='dstairs';
+        dstairsEl.style.left = (all.dstairs5.x * 50).toString() + 'px';
+        dstairsEl.style.top = (all.dstairs5.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(dstairsEl);  
+        const graveEl = document.createElement('div');
+        graveEl.id ='grave';
+        graveEl.style.left = (all.grave.x * 50).toString() + 'px';
+        graveEl.style.top = (all.grave.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(dstairsEl);  
     }
     for (let i = 0; i < all.enemyStats5.length; i++) {
         const enemyEl = document.createElement('div');
         const enemy = all.enemyStats5[i];
-        enemyEl.className ='enemy';
+        enemyEl.className ='shadow-Nelda';
         enemyEl.id='enemy' + i;
         enemyEl.style.left = (enemy.x * 50).toString() + 'px';
         enemyEl.style.top = (enemy.y * 50).toString() + 'px';
@@ -167,20 +177,16 @@ function completeMove(x,y) {
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
 
-    // if a treasure is there
-    // if (treasures) {
-        for (let i = 0; i < treasures.length; i++) {
+        for (let i = 0; i < all.treasures5.length; i++) {
             let treas = document.getElementsByClassName('treasure');
             if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
                 let el = treas[i].id.substring(5,6);
                 getItem(el);
             }
         }
-    // }
-    // if enemies exist
-    // if (all.enemyStats5) {
+
         for (let i = 0; i < all.enemyStats5.length; i++) {
-            let enemy = document.getElementsByClassName('enemy');
+            let enemy = document.getElementsByClassName('shadow-Nelda');
             //  if you move next to an enemy, battle will initiate.
             if (isAdjacent(all.enemyStats5[i].x, all.enemyStats5[i].y)) {
                 let el = enemy[i].id.substring(5,6);
@@ -188,18 +194,27 @@ function completeMove(x,y) {
             }
     }
     //  this is the exit point--it changes every level
-    // if (link.style.top === "250px" && link.style.left === "250px") {
-    //     alert("you don't know what you're getting into");
-    //     window.location.replace("./level3.html");
-    // }
+    if (link.style.top === "150px" && link.style.left === "150px") {
+        alert("sensible people don't enter graves");
+        localStorage.setItem('objString', JSON.stringify(all));
+        window.location.replace("./level6.html");
+    }
     //  this is to return to the previous screen--it changes every level
-    if (link.style.top === "200px" && link.style.left === "400px") {
+    if (link.style.top === "150px" && link.style.left === "400px") {
             alert("you don't know what you're getting into");
+            localStorage.setItem('objString', JSON.stringify(all));
             window.location.replace("./level4.html");
     }
-
+    // if link falls in a hole, it's instant death
+    for (let i = 0; i < all.holes5.length; i++) {
+        holex = all.holes5[i].x;
+        holey = all.holes5[i].y;
+        if (all.linkStats.x===holex && all.linkStats.y===holey){
+        localStorage.clear();
+        window.location.replace("./endgame4.html");
+        }
 }
-// }
+}
 
 function isAdjacent(x, y){
     if ((x + 1 === all.linkStats.x && y === all.linkStats.y) || 
@@ -213,18 +228,20 @@ function isAdjacent(x, y){
 }
 
 function battle(el) {
-    alert(`you encountered a ${all.enemyStats5[el].type}`);
+    alert(`you encountered the ${all.enemyStats5[el].type}`);
     // link always goes first
     while (all.linkStats.hp > 0 && all.enemyStats5[el].hp > 0) {
         fightRound(el);
         if (all.linkStats.hp <= 0) {
             alert("you're real dead");
+            // popUp.style.display="none";
+            localStorage.clear();
             window.location.replace("./index.html");
         }
         if (all.enemyStats5[el].hp <=0){        
-            // all.enemyStats5.pop();
             removeEnemy(el);
-            alert("The scrub was vanquished!")
+            alert("Nelda's Shadow was vanquished!");
+            break;
         }
     }
     //  update the menu display
@@ -232,16 +249,14 @@ function battle(el) {
 }
 
 function fightRound(el) {
-    // link always goes first
-    let linkAtt = Math.floor(Math.random()*all.linkStats.damage);
-    console.log("Link attacks with " + all.linkStats.weapon + " !");
-    console.log("Link causes " + linkAtt + " damage!");
+    // link always goes first, causes at least 20 damage
+    let linkAtt = Math.max(Math.floor(Math.random()*all.linkStats.damage), 20);
+    alert("Link attacks with " + all.linkStats.weapon + ":" + linkAtt + " damage!");
     all.enemyStats5[el].hp -=linkAtt;
     if (all.enemyStats5[el].hp >= 0) {
     // then the enemy goes
-        let enemyAtt = Math.floor(Math.random()*all.enemyStats5[el].damage);
-        console.log(`The ${all.enemyStats5[el].type} attacks!`);
-        console.log(`The ${all.enemyStats5[el].type} causes " + enemyAtt + " damage!`);
+        let enemyAtt = Math.max(Math.floor(Math.random()*all.enemyStats5[el].damage),10);
+        alert(`The ${all.enemyStats5[el].type} attacks:  ${enemyAtt} damage!`);
         all.linkStats.hp-=enemyAtt;
         menuDisplay();
     }
@@ -250,6 +265,7 @@ function fightRound(el) {
 function getItem(el){
     console.log("You got a " + all.treasures5[el].type);
     all.linkStats.items.push(all.treasures5[el]);
+    all.linkStats.itemList.push(all.treasures5[el].type);
     menuDisplay();
     removeTreas(el);
 }

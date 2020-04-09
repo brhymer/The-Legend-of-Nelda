@@ -178,8 +178,14 @@ function findObstacles(x,y) {
         const enemy = all.enemyStats3[i];
         if (enemy.x === x && enemy.y === y) {
             return true;
+        }
     }
-}
+    if (all.redDoor.x === x && all.redDoor.y === y) {     
+        return true;   
+    }
+    if (all.oldManPos1.x === x && all.oldManPos1.y === y) {
+        return true;
+    }
     return false;
 }
 
@@ -207,7 +213,7 @@ function completeMove(x,y) {
                 let el = enemy[i].id.substring(5,6);
                 battle(el);
             }
-    // }
+    }
     //  this is the exit point--it changes every level
     if (link.style.top === "150px" && link.style.left === "200px") {
         alert("you're gonna die here");
@@ -224,6 +230,7 @@ function completeMove(x,y) {
     if ((link.style.top === "50px" && link.style.left === "200px") ||
     (link.style.top === "50px" && link.style.left === "250px")){
         alert('you fell in a hole and died badly');
+        localStorage.clear();
         window.location.replace("./index.html");
     }
     //  if link has an ineffective weapon, he'll find the partizan here
@@ -233,8 +240,8 @@ function completeMove(x,y) {
         all.linkStats.weapon="Partizan";
         all.linkStats.damage="120";
         menuDisplay();
-}
-}
+    }
+    // }
 }
 
 function isAdjacent(x, y){
@@ -256,6 +263,7 @@ function battle(el) {
         if (all.linkStats.hp <= 0) {
             alert("you're real dead");
             // popUp.style.display="none";
+            localStorage.clear();
             window.location.replace("./index.html");
         }
         if (all.enemyStats3[el].hp <=0){        
@@ -330,35 +338,47 @@ clickOM.onclick = function() {
   popUp.style.display = "block";
   let randomIndex = Math.floor(Math.random()*3)
   let message = [
-      "Bring me something nice, I'll give you this key",
-      "...? Never heard of her.  You must mean Nelda.",
-      ""
+      "Beware of Nelda's lightning",
+      "There's a secret beyond the blue door",
+      "Thanks for letting me out"
   ]
-  if (all.linkStats.weapon==="bare hands") {
-    words.innerText ="You're gonna need a weapon if you're going in there.  Take this."
-    alert('you received the Adequate Sword!')
-    all.linkStats.weapon="Adequate Sword";
-    all.linkStats.damage=80;
 
-  } else {
-    words.innerText = message[randomIndex];
-    randomIndex = Math.floor(Math.random()*3)
-  }
   menuDisplay();
 
 }
 
-// When the user clicks on <span> (x), close the modal
+const popUp2 = document.getElementById("open");
+
+// Click the door to open the dialogue box
+const clickOM2 = document.getElementById("red-door");
+
+// when player clicks on the door, open the dialogue
+if (all.linkStats.itemList.includes('red key')) {
+    clickOM2.onclick = function() {
+  choice = confirm('use the red key?')
+  if (choice){
+  clickOM2.remove();
+  all.redDoor.x= 100;
+  all.redDoor.y=100;
+  redkeyIndex = all.linkStats.itemList.indexOf('red key');
+  all.linkStats.itemList.splice(redkeyIndex,1);
+
+  menuDisplay();
+
+    }
+    }
+}
+
+// When the user clicks X, close the popup
 span.onclick = function() {
   popUp.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
+// When the user clicks outside of the popup, close it
 window.onclick = function(event) {
   if (event.target == popUp) {
     popUp.style.display = "none";
   }
 }
-
 
 

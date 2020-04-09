@@ -54,7 +54,12 @@ function addMapItems(){
         bdoorEl.id ='blue-door';
         bdoorEl.style.left = (all.blueDoor.x * 50).toString() + 'px';
         bdoorEl.style.top = (all.blueDoor.y * 50).toString() + 'px';
-        document.querySelector('#board').appendChild(bdoorEl);  
+        document.querySelector('#board').appendChild(bdoorEl); 
+        const sdoorEl = document.createElement('div');
+        sdoorEl.className ='wall';
+        sdoorEl.style.left = (all.secretDoor.x * 50).toString() + 'px';
+        sdoorEl.style.top = (all.secretDoor.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(sdoorEl);  
 
     for (let i = 0; i < all.enemyStats2.length; i++) {
         const enemyEl = document.createElement('div');
@@ -111,7 +116,7 @@ function moveLeft() {
         completeMove(all.linkStats.x, all.linkStats.y);
         link = document.querySelector('.link');
         link.id = 'ltlink';
-    }
+    } 
 }
 function moveUp() {
 
@@ -169,11 +174,11 @@ function findObstacles(x,y) {
         const enemy = all.enemyStats2[i];
         if (enemy.x === x && enemy.y === y) {
             return true;
+        }
     }
-    if (all.blueDoor.x === x && all.blueDoor.y === y) {
-        return true;
+    if (all.blueDoor.x === x && all.blueDoor.y === y) {     
+        return true;   
     }
-}
     return false;
 }
 
@@ -182,8 +187,6 @@ function completeMove(x,y) {
     link.style.top = (y * 50).toString() + 'px';
     link.style.left = (x * 50).toString() + 'px';
 
-    // if a treasure is there
-    // if (treasures) {
         for (let i = 0; i < all.treasures2.length; i++) {
             let treas = document.getElementsByClassName('treasure');
             if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
@@ -191,9 +194,6 @@ function completeMove(x,y) {
                 getItem(el);
             }
         }
-    // }
-    // if enemies exist
-    // if (enemyStats2) {
         for (let i = 0; i < all.enemyStats2.length; i++) {
             let enemy = document.getElementsByClassName('enemy');
             //  if you move next to an enemy, battle will initiate.
@@ -214,10 +214,16 @@ function completeMove(x,y) {
         localStorage.setItem('objString', JSON.stringify(all));
         window.location.replace("./level1.html");
     }
-    
+    //  secret door!
+    if (all.linkStats.itemList.includes('wind key')){
+        if (link.style.top === "100px" && link.style.left === "450px") {
+            localStorage.setItem('objString', JSON.stringify(all));
+            window.location.replace("./secret.html");
+        } else {
+        alert('some force is blocking you')    
+    }
+} 
 }
-// }
-
 function isAdjacent(x, y){
     if ((x + 1 === all.linkStats.x && y === all.linkStats.y) || 
     (x + 1 === all.linkStats.x && y === all.linkStats.y) ||
@@ -237,6 +243,7 @@ function battle(el) {
         if (all.linkStats.hp <= 0) {
             alert("you're real dead");
             // popUp.style.display="none";
+            localStorage.clear();
             window.location.replace("./index.html");
         }
         if (all.enemyStats2[el].hp <=0){        
@@ -280,7 +287,7 @@ function removeEnemy(el){
 
 function removeTreas(el){
     let gone = document.getElementById("treas" + el);
-    all.treasures2.splice(el, 1);
+    // all.treasures2.splice(el, 1);
     gone.remove();
  }
 
@@ -300,3 +307,39 @@ placeCharacter();
 menuDisplay();
 
 
+const popUp = document.getElementById("talk");
+
+// Click the door to open the dialogue box
+const clickOM = document.getElementById("blue-door");
+
+// The X to close the popup
+const span = document.getElementsByClassName("close")[0];
+
+// when player clicks on the door, open the dialogue
+if (all.linkStats.itemList.includes('blue key')) {
+    clickOM.onclick = function() {
+  choice = confirm('use the blue key?')
+  if (choice){
+  clickOM.remove();
+  all.blueDoor.x= 100;
+  all.blueDoor.y=100;
+  bluekeyIndex = all.linkStats.itemList.indexOf('blue key');
+  all.linkStats.itemList.splice(bluekeyIndex,1);
+
+  menuDisplay();
+
+    }
+    }
+}
+
+// When the user clicks X, close the popup
+span.onclick = function() {
+  popUp.style.display = "none";
+}
+
+// When the user clicks outside of the popup, close it
+window.onclick = function(event) {
+  if (event.target == popUp) {
+    popUp.style.display = "none";
+  }
+}

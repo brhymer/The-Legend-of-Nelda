@@ -104,7 +104,7 @@ function moveLeft() {
         completeMove(all.linkStats.x, all.linkStats.y);
         link = document.querySelector('.link');
         link.id = 'ltlink';
-    }
+    } 
 }
 function moveUp() {
 
@@ -184,7 +184,7 @@ function completeMove(x,y) {
     // if enemies exist
     // if (enemyStats) {
         for (let i = 0; i < all.enemyStats4.length; i++) {
-            let enemy = document.getElementsByClassName('enemy');
+            let enemy = document.getElementsByClassName('sentinel');
             //  if you move next to an enemy, battle will initiate.
             if (isAdjacent(all.enemyStats4[i].x, all.enemyStats4[i].y)) {
                 let el = enemy[i].id.substring(5,6);
@@ -233,10 +233,9 @@ function battle(el) {
             window.location.replace("./index.html");
         }
         if (all.enemyStats4[el].hp <=0){        
-            // enemyStats.pop();
-            // alert(enemyStats[el])
             removeEnemy(el);
-            alert("The scrub was vanquished!")
+            alert("The sentinel was vanquished!")
+            break;
         }
     }
     //  update the menu display
@@ -260,6 +259,7 @@ function fightRound(el) {
 function getItem(el){
     console.log("You got a " + all.treasures4[el].type);
     all.linkStats.items.push(all.treasures4[el]);
+    all.linkStats.itemList.push(all.treasures2[el].type);
     menuDisplay();
     removeTreas(el);
 }
