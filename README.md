@@ -1,26 +1,30 @@
 # Project0
 
-
-Items in {curly brackets} indicate nice-to-haves.
+For this project, I have endeavored to create a short adventure game reminiscent of NES classic The Legend of Zelda.  The game uses 12 HTML pages, a CSS file, 8 Javascript files as well as JQuery, and 22 sprites.  Due to the use of local storage, the player can move between levels while maintaining the game state.
 
 ## MVP:
 
-This will be a short adventure game that cosmetically resembles NES classic The Legend of Zelda {using sprites for on-screen objects}.
+In this game, the player takes control of a character bent on plundering the tomb of Nelda, a long-dead sorceress, searching for her spellbook.  The player will navigate through 6 levels of pre-rendered maps, finding items, engaging with enemies, and meeting NPCs.  When battling enemies, damage is randomized, although the player can find superior weapons, as well as items that will improve the odds.  
 
-The player will take control of a character and move it around a number of pre-rendered maps.
+## Game whiteboard:
+![The original whiteboard that was used to guide level design](./game-whiteboard.png)
 
-The player will be able to collect items, interact with NPCs, {view an inventory screen, use items} and battle enemies.
-
-## Map development whiteboard:
-
-![level maps](./sprites/whiteboard.png)
+## Game images:
+![The title screen](./title-screen.png)
+![A screenshot of the game in action](./gameplay.png)
 
 ## User stories:
 
-I. The game opens with a title screen.  When the player presses the start button, the game begins and they are placed on the first map. There are no enemies on the first map. There is one NPC.
+I. The game opens with a title screen.  When the player presses the start button, the game begins and they are placed on the first map. There are no enemies on the first map. There is one NPC.  This NPC has randomized dialogue and can provide a special item.  Lastly, when certain conditions are met, this NPC provides the means for completing the game.  
 
-II. When the player reaches a designated spot, they will move into the second map, which appears on a new page.  The second map has enemies, treasures{, and a locked door} to interact with.
+II. When the player reaches a designated spot, they will move into the second map, which appears on a new page.  The second map has enemies, treasures, and a locked door to interact with.  
 
-III. As the player descends to the final (6th) screen, they will encounter other hazards, treasures, and NPCs.
+III. The third map has another NPC, another locked door, more items, a hidden weapon, and hazards in the form of holes in the floor.
 
-IV. At the end of the game, the player’s performance will be rated. {There will be two possible endings.}
+IV. The fourth map has only enemies, treasures, and holes.  
+
+V.  On the fifth map, the player finds Nelda's grave, a variety of treasures, and a boss battle.
+
+VI. If the player survives to the sixth map, they will find the final boss battle and the last and most important treasure.
+
+VII.  There is one secret area and four different possible endings.

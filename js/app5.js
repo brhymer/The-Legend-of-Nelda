@@ -1,6 +1,7 @@
 //  crypt setup
 window.localStorage;
 all = JSON.parse(localStorage.getItem('objString'));
+const itemSound = new Audio("./item.wav");
 
 function placeCharacter(){
     const link = document.createElement('div');
@@ -18,6 +19,14 @@ function formBoundaries() {
         wallElement.style.left = (wall.x * 50).toString() + 'px';
         wallElement.style.top = (wall.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(wallElement);
+    }
+    for (let i = 0; i < all.statues.length; i++) {
+        const statue = all.statues[i];
+        const statueElement = document.createElement('div');
+        statueElement.className ='statue';
+        statueElement.style.left = (statue.x * 50).toString() + 'px';
+        statueElement.style.top = (statue.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(statueElement);
     }
 };
 // level-specific--UPDATE
@@ -173,6 +182,14 @@ function findObstacles(x,y) {
             return true;
     }
 }
+
+    for (let i = 0; i < all.statues.length; i++) {
+        const statue = all.statues[i];
+        if (statue.x === x && statue.y === y) {
+            return true;
+    }
+}
+
     return false;
 }
 
@@ -276,6 +293,7 @@ function fightRound(el) {
 function getItem(el){
     alert("You got " + all.treasures5[el].type + "\n(" + all.treasures5[el].description+")");
     all.linkStats.itemList.push(all.treasures5[el].type);
+    itemSound.play();
     menuDisplay();
     removeTreas(el);
 }
@@ -300,8 +318,8 @@ function menuDisplay(){
     itemDisplay.innerText = `Items: ${all.linkStats.itemList}`;
 }
 
-placeCharacter();
 formBoundaries();
 addMapItems();
+placeCharacter();
 menuDisplay();
 

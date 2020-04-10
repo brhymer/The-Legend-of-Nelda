@@ -1,6 +1,7 @@
 // Secret area
 window.localStorage;
 all = JSON.parse(localStorage.getItem('objString'));
+const openSound = new Audio("./secret.wav");
 let firstTime = true;
 const faerie ={
     x: 2, y: 2
@@ -161,6 +162,7 @@ function completeMove(x,y) {
     if ((link.style.top === "100px" && link.style.left === "250px") && (firstTime) && (all.linkStats.weapon!=="Devastation Rod")) {
         document.getElementById('faerie').style.display='block';
         alert("Congratulations on finding me!");
+        openSound.play();
     }
         if ((link.style.top === "100px" && link.style.left === "150px") && (firstTime) && (all.linkStats.weapon!=="Devastation Rod")) {
             alert("Nelda lived a modest life but was extremely powerful. \nHer essence endures below.  Please put an end to her evil and claim the Biforce.");

@@ -1,6 +1,8 @@
 // 1st basement setup
 window.localStorage;
 all = JSON.parse(localStorage.getItem('objString'));
+const itemSound = new Audio("./item.wav");
+const openSound = new Audio("./secret.wav");
 
 function placeCharacter(){
     const link = document.createElement('div');
@@ -280,6 +282,7 @@ function fightRound(el) {
 function getItem(el){
     alert("You got a " + all.treasures2[el].type + "\n(" + all.treasures2[el].description+")");
     all.linkStats.itemList.push(all.treasures2[el].type);
+    itemSound.play();
     menuDisplay();
     removeTreas(el);
 }
@@ -312,13 +315,8 @@ placeCharacter();
 menuDisplay();
 
 
-const popUp = document.getElementById("talk");
-
 // Click the door to open the dialogue box
 const clickOM = document.getElementById("blue-door");
-
-// The X to close the popup
-const span = document.getElementsByClassName("close")[0];
 
 // when player clicks on the door, open the dialogue
 if (all.linkStats.itemList.includes('blue key')) {
@@ -326,6 +324,7 @@ if (all.linkStats.itemList.includes('blue key')) {
   choice = confirm('use the blue key?')
   if (choice){
   clickOM.remove();
+  openSound.play();
   all.blueDoor.x= 100;
   all.blueDoor.y=100;
   bluekeyIndex = all.linkStats.itemList.indexOf('blue key');

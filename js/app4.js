@@ -1,6 +1,7 @@
 //  3nd basement setup
 window.localStorage;
 all = JSON.parse(localStorage.getItem('objString'));
+const itemSound = new Audio("./item.wav");
 
 function placeCharacter(){
     const link = document.createElement('div');
@@ -265,6 +266,7 @@ function getItem(el){
     if (all.treasures4[el].type==="Nelda's robe"){
         all.linkStats.hp+=140;
     }
+    itemSound.play();
     menuDisplay();
     removeTreas(el);
 
@@ -290,8 +292,8 @@ function menuDisplay(){
     itemDisplay.innerText = `Items: ${all.linkStats.itemList}`;
 }
 
-placeCharacter();
 formBoundaries();
 addMapItems();
+placeCharacter();
 menuDisplay();
 

@@ -27,7 +27,7 @@ body{
     height: 50px;
 }
 .treasure{
-    background: gold;
+    background: url("../sprites/treasure-sprite.jpg");
     background-size: cover;
     position: absolute;
     width: 50px;
@@ -64,8 +64,24 @@ body{
     height: 50px;
 }
 
+.statue{
+    background-image: url('../sprites/statue-sprite.jpg');
+    background-size: cover;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
+.bones{
+    background-image: url('../sprites/bones-sprite.jpg');
+    background-size: cover;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
+
 .shadow-Nelda{
-    background: pink;
+    background: url('../sprites/neldashadow-sprite.jpg');
     background-size: cover;
     position: absolute;
     width: 50px;
@@ -73,7 +89,7 @@ body{
 } 
 
 .nelda{
-    background: rgb(82, 1, 114);
+    background: url('../sprites/nelda-sprite.jpg');
     background-size: cover;
     position: absolute;
     width: 50px;
@@ -85,6 +101,11 @@ body{
     position: absolute;
     height: 50px;
     width: 50px;
+}
+
+.instruct{
+    color: rgb(238, 128, 128);
+    font-size: 15px;
 }
 
 #give-up {
@@ -175,7 +196,7 @@ body{
 }
 
 #blue-door {
-    background: darkblue;
+    background: url("../sprites/bluedoor-sprite.jpg");
     background-size: cover;
     height: 50px;
     width: 50px;
@@ -183,7 +204,7 @@ body{
 }
 
 #red-door {
-    background: darkred;
+    background: url("../sprites/reddoor-sprite.jpg");
     background-size: cover;
     height: 50px;
     width: 50px;
@@ -228,7 +249,6 @@ body{
     border: 1px black solid;
 }
 
-
 #title-page{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 30px;
@@ -263,8 +283,15 @@ body{
 }
 
 #faerie{
-    background: orange;
+    background: url("../sprites/faerie-sprite.jpg");
     display: none;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+}
+
+#biforce0{
+    background-image: url("../sprites/biforce-sprite.jpg");
     position: absolute;
     height: 50px;
     width: 50px;

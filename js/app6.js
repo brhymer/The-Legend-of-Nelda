@@ -1,6 +1,7 @@
 //  underground setup
 window.localStorage;
 all = JSON.parse(localStorage.getItem('objString'));
+const itemSound = new Audio("./item.wav");
 function placeCharacter(){
     const link = document.createElement('div');
     link.className='link';
@@ -33,7 +34,7 @@ function addMapItems(){
         const treasEl = document.createElement('div');
         const treas = all.treasures6[i];
         treasEl.className ='treasure';
-        treasEl.id='treas' + i;
+        treasEl.id='biforce'+i;
         treasEl.style.left = (treas.x * 50).toString() + 'px';
         treasEl.style.top = (treas.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(treasEl);
@@ -42,6 +43,16 @@ function addMapItems(){
         ustairsEl.style.left = (all.ustairs6.x * 50).toString() + 'px';
         ustairsEl.style.top = (all.ustairs6.y * 50).toString() + 'px';
         document.querySelector('#board').appendChild(ustairsEl);  
+    }
+
+    for (let i = 0; i < all.bones.length; i++) {
+        const bonesEl = document.createElement('div');
+        const bone = all.bones[i];
+        bonesEl.className ='bones';
+        bonesEl.id='bones' + i
+        bonesEl.style.left = (bone.x * 50).toString() + 'px';
+        bonesEl.style.top = (bone.y * 50).toString() + 'px';
+        document.querySelector('#board').appendChild(bonesEl);  
     }
     for (let i = 0; i < all.enemyStats6.length; i++) {
         const enemyEl = document.createElement('div');
@@ -169,7 +180,7 @@ function completeMove(x,y) {
         for (let i = 0; i < all.treasures6.length; i++) {
             let treas = document.getElementsByClassName('treasure');
             if (link.style.top === treas[i].style.top && link.style.left === treas[i].style.left) {
-                let el = treas[i].id.substring(5,6);
+                let el = treas[i].id.substring(7,8);
                 getItem(el);
             }
         }
@@ -252,8 +263,8 @@ function fightRound(el) {
 
 function getItem(el){
     alert("You got " + all.treasures6[el].type + "\n(" + all.treasures6[el].description+")");
-    // all.linkStats.items.push(all.treasures6[el]);
     all.linkStats.itemList.push(all.treasures6[el].type);
+    itemSound.play();
     menuDisplay();
     removeTreas(el);
 }
@@ -264,7 +275,7 @@ function removeEnemy(el){
  }
 
 function removeTreas(el){
-    let gone = document.getElementById("treas" + el);
+    let gone = document.getElementById("biforce" + el);
     all.treasures6.splice(el, 1);
     gone.remove();
  }
@@ -278,7 +289,7 @@ function menuDisplay(){
     itemDisplay.innerText = `Items: ${all.linkStats.itemList}`;
 }
 
-placeCharacter();
 formBoundaries();
 addMapItems();
+placeCharacter();
 menuDisplay();

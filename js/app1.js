@@ -1,6 +1,7 @@
 // Opening page -- no enemies
 window.localStorage;
 const all = JSON.parse(localStorage.getItem('objString'));
+const itemSound = new Audio("./item.wav");
 
 function placeCharacter(){
     const link = document.createElement('div');
@@ -183,8 +184,8 @@ function isAdjacent(x, y){
 
 function getItem(el){
     alert("You got a " + all.treasures1[el].type + "\n(" + all.treasures1[el].description+")");
-    // all.linkStats.items.push(all.treasures1[el]);
     all.linkStats.itemList.push(all.treasures1[el].type);
+    itemSound.play();
     menuDisplay();
     removeTreas(el);
 }

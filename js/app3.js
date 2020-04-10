@@ -1,6 +1,8 @@
 //  2nd basement setup
 window.localStorage;
 all = JSON.parse(localStorage.getItem('objString'));
+const itemSound = new Audio("./item.wav");
+const openSound = new Audio("./secret.wav");
 
 function placeCharacter(){
     const link = document.createElement('div');
@@ -23,7 +25,7 @@ function formBoundaries() {
 // level-specific--UPDATE
 function addMapItems(){
     const oldManEl = document.createElement('div');
-    oldManEl.id ='old-man1';
+    oldManEl.id ='old-man2';
     oldManEl.style.left = (all.oldManPos3.x * 50).toString() + 'px';
     oldManEl.style.top = (all.oldManPos3.y * 50).toString() + 'px';
     document.querySelector('#board').appendChild(oldManEl);
@@ -293,6 +295,7 @@ function fightRound(el) {
 function getItem(el){
     alert("You got a " + all.treasures3[el].type + "\n(" + all.treasures3[el].description+")");
     all.linkStats.itemList.push(all.treasures3[el].type);
+    itemSound.play();
     menuDisplay();
     removeTreas(el);
 }
@@ -330,7 +333,7 @@ let message = [
     "Thanks for letting me out"
 ]
 // Click the old man to open the dialogue box
-const clickOM = document.getElementById("old-man1");
+const clickOM = document.getElementById("old-man2");
 clickOM.onclick = function() {
   words = document.getElementById('words');
   popUp.style.display = "block";
@@ -350,6 +353,7 @@ if (all.linkStats.itemList.includes('red key')) {
   choice = confirm('use the red key?')
   if (choice){
   click2.remove();
+  openSound.play();
   all.redDoor.x= 100;
   all.redDoor.y=100;
   redkeyIndex = all.linkStats.itemList.indexOf('red key');

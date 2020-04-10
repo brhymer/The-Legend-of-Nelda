@@ -352,6 +352,14 @@ const all = {
         x: 5, 
         y: 3
     }],
+    statues: [
+        {x: 6, y:1},
+        {x: 7, y:1},
+        {x: 8, y:1},
+        {x: 6, y:5},
+        {x: 7, y:5},
+        {x: 8, y:5}
+    ],
     treasures5: [
         {type: "Nelda's necklace",
         description: "a beautiful antique",
@@ -493,6 +501,14 @@ const all = {
     ustairs6: {
         x: 3, y: 3
     },
+    bones: [
+        {x: 7, y: 1},
+        {x: 7, y: 3},
+        {x: 7, y: 4},
+        {x: 7, y: 5},
+        {x: 8, y: 2},
+        {x: 8, y: 5}
+    ],
     treasures6: [
         {type: "the Biforce",
         description: "67% as good as the triforce",
